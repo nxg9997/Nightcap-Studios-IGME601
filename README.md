@@ -3,7 +3,7 @@
 
 ## Team
 
-- Abhishek Panhale
+- Abhishek Panhale >_<
 - David Liu
 - Michael Berger
 - Nathan Glick
