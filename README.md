@@ -5,7 +5,7 @@
 
 - Abhishek Panhale >_<
 - David Liu
-- Michael Berger
+- Michael Berger 0u0
 - Nathan Glick
 - Surya Ajayakumar
 
@@ -31,3 +31,8 @@ Regular stand-up meetings will take place roughly at 3:00 PM on Mondays, Wednesd
 Trello is used to keep track of tasks that need to be done for the project. Members will be assigned to tasks as needed amongst all roles. All task management should be done over Trello.
 
 [Trello Board](https://trello.com/b/QD5uso8A/wizards-with-hats)
+
+### Google Drive
+Google Drive is a pretty cool service where we can chuck large files at it and it'll save them. You can find the link here:
+
+[Google Drive](https://drive.google.com/drive/folders/1_EkX93Jr42Y3Sng88yiRZOCuJ8a5382c)
