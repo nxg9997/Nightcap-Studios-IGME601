@@ -29,3 +29,5 @@ Regular stand-up meetings will take place roughly at 3:00 PM on Mondays, Wednesd
 
 ### Trello
 Trello is used to keep track of tasks that need to be done for the project. Members will be assigned to tasks as needed amongst all roles. All task management should be done over Trello.
+
+[Trello Board](https://trello.com/b/QD5uso8A/wizards-with-hats)
