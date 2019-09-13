@@ -36,3 +36,6 @@ Trello is used to keep track of tasks that need to be done for the project. Memb
 Google Drive is a pretty cool service where we can chuck large files at it and it'll save them. You can find the link here:
 
 [Google Drive](https://drive.google.com/drive/folders/1_EkX93Jr42Y3Sng88yiRZOCuJ8a5382c)
+
+##Branching Strategy
+Feature based branching strategy will be used for this project
