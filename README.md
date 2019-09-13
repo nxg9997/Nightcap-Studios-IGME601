@@ -37,5 +37,5 @@ Google Drive is a pretty cool service where we can chuck large files at it and i
 
 [Google Drive](https://drive.google.com/drive/folders/1_EkX93Jr42Y3Sng88yiRZOCuJ8a5382c)
 
-##Branching Strategy
+## Branching Strategy
 Feature based branching strategy will be used for this project
