@@ -46,11 +46,9 @@ public class PlayerController : MonoBehaviour
 
         // Create own gravity for rigidbody
         Vector3 velocity = (transform.forward * vertical) * speed * Time.fixedDeltaTime;
+        velocity += (transform.right * horizontal) * speed * Time.fixedDeltaTime;
         velocity.y = body.velocity.y;
         body.velocity = velocity;
-
-        // Rotate player
-        transform.Rotate((transform.up * horizontal) * rotationSpeed * Time.fixedDeltaTime);
     }
 
     // Check for when a collider hits this game object

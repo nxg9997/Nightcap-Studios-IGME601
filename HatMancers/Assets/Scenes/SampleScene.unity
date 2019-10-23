@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 434855638}
   - component: {fileID: 434855634}
   - component: {fileID: 434855632}
+  - component: {fileID: 434855633}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -156,6 +157,25 @@ MonoBehaviour:
   speed: 300
   rotationSpeed: 150
   jumpForce: 150
+--- !u!114 &434855633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434855631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5beb83cd5deafa438fb75026146f683, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  XSensitivity: 2
+  YSensitivity: 2
+  clampVerticalRotation: 1
+  MinimumX: -90
+  MaximumX: 90
+  smooth: 0
+  smoothTime: 5
 --- !u!136 &434855634
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -505,7 +525,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.22004612, y: -0, z: -0, w: 0.9754895}
-  m_LocalPosition: {x: 0, y: 2.73, z: -8.01}
+  m_LocalPosition: {x: -0.39, y: 2.62, z: -2.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 434855637}
