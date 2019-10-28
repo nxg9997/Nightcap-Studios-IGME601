@@ -16,6 +16,8 @@ public class PlayerData : MonoBehaviour
     public float spawnTime = 3;
     public bool dead = false;
 
+    public float killPlaneDepth = -50;
+
     public bool testDummy = false;
 
     // Start is called before the first frame update
@@ -38,7 +40,16 @@ public class PlayerData : MonoBehaviour
         else
         {
             StickyHat();
+            CheckKillPlane();
             CheckHealth();
+        }
+    }
+
+    void CheckKillPlane()
+    {
+        if(transform.position.y <= killPlaneDepth)
+        {
+            health = 0;
         }
     }
 
@@ -68,6 +79,7 @@ public class PlayerData : MonoBehaviour
 
     void Respawn()
     {
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
         spawnTimer += Time.deltaTime;
         if(spawnTimer > spawnTime)
         {

@@ -48,7 +48,16 @@ public class Spells : MonoBehaviour
     void Fire()
     {
         GameObject fireball = GameObject.Instantiate(fireProj, transform.position + transform.forward * 2, Quaternion.identity);
-        fireball.transform.forward = gameObject.GetComponentInChildren<Camera>().transform.forward;
+        Transform[] trans = gameObject.GetComponentsInChildren<Transform>();
+        foreach(Transform t in trans)
+        {
+            if(t.gameObject.name == "Head")
+            {
+                fireball.transform.forward = t.forward;//gameObject.GetComponentInChildren<Camera>().transform.forward;
+                break;
+            }
+        }
+        
         fireball.GetComponent<Rigidbody>().AddForce(fireball.transform.forward * fireForce);
     }
 }
