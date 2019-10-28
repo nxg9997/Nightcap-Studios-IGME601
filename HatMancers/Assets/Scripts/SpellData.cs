@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpellData : MonoBehaviour
 {
     public int damage = 20;
+    public GameObject origin;
 
     // Start is called before the first frame update
     void Start()

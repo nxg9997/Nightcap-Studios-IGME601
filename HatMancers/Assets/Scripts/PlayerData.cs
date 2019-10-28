@@ -59,6 +59,10 @@ public class PlayerData : MonoBehaviour
         {
             currMagic = "fire";
         }
+        else if (currHat.tag == "LightningHat")
+        {
+            currMagic = "lightning";
+        }
     }
 
     void StickyHat()
@@ -105,7 +109,8 @@ public class PlayerData : MonoBehaviour
         }
         else if(col.gameObject.tag == "Damage")
         {
-            health -= col.gameObject.GetComponent<SpellData>().damage;
+            if(col.gameObject.GetComponent<SpellData>().origin != gameObject)
+                health -= col.gameObject.GetComponent<SpellData>().damage;
         }
     }
 }
