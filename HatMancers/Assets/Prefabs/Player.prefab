@@ -373,6 +373,12 @@ MonoBehaviour:
     type: 3}
   fireForce: 500
   fireDelayTime: 0.5
+  lightningObj: {fileID: 0}
+  lightningDelayTime: 5
+  lightningDist: 10
+  lightningPersistTime: 2
+  lightningPersistTimer: 0
+  iceObj: {fileID: 0}
 --- !u!114 &1166933320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,4 +397,5 @@ MonoBehaviour:
   spawn: {fileID: 0}
   spawnTime: 3
   dead: 0
+  killPlaneDepth: -50
   testDummy: 0

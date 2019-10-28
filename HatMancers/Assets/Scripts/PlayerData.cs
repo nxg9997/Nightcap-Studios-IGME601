@@ -63,6 +63,10 @@ public class PlayerData : MonoBehaviour
         {
             currMagic = "lightning";
         }
+        else if (currHat.tag == "IceHat")
+        {
+            currMagic = "ice";
+        }
     }
 
     void StickyHat()
@@ -111,6 +115,17 @@ public class PlayerData : MonoBehaviour
         {
             if(col.gameObject.GetComponent<SpellData>().origin != gameObject)
                 health -= col.gameObject.GetComponent<SpellData>().damage;
+            Debug.Log(health);
+        }
+    }
+
+    void OnTriggerStay(Collider col)
+    {
+        if (col.gameObject.tag == "Damage")
+        {
+            if (col.gameObject.GetComponent<SpellData>().origin != gameObject)
+                health -= col.gameObject.GetComponent<SpellData>().damage;
+            Debug.Log(health);
         }
     }
 }

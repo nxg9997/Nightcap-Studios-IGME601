@@ -21,6 +21,10 @@ public class Spells : MonoBehaviour
     public float lightningPersistTimer = 0;
     private GameObject currBolt;
 
+    // Ice Data
+    public GameObject iceObj;
+    private GameObject currIce;
+
     // Player Data Script
     private PlayerData pData;
 
@@ -53,6 +57,10 @@ public class Spells : MonoBehaviour
             lightningDelay = true;
             lightningTime = 0;
         }
+        else if (Input.GetAxis("Fire1") > 0 && pData.currMagic == "ice")
+        {
+            Ice();
+        }
         else
         {
             if(pData.currMagic == "fire")
@@ -81,6 +89,12 @@ public class Spells : MonoBehaviour
                 {
                     lightningDelay = false;
                 }
+            }
+
+            if(pData.currMagic == "ice")
+            {
+                Destroy(currIce);
+                currIce = null;
             }
 
         }
@@ -147,6 +161,19 @@ public class Spells : MonoBehaviour
             {
                 rch.collider.gameObject.GetComponent<PlayerData>().health -= bolt.GetComponent<SpellData>().damage;
             }
+        }
+    }
+
+    void Ice()
+    {
+        if(currIce == null)
+        {
+            currIce = GameObject.Instantiate(iceObj, transform.position + transform.forward * 1.5f, transform.rotation);
+        }
+        else
+        {
+            currIce.transform.position = transform.position + transform.forward * 1.5f;
+            currIce.transform.rotation = transform.rotation;
         }
     }
 }
