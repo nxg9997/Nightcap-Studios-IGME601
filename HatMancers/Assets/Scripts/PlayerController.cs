@@ -11,12 +11,16 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Modifiable Attributes
+    public Transform head;
     public float speed;
     public float rotationSpeed;
     public float jumpForce;
 
     // Rigidbody for physics
     private Rigidbody body;
+
+    // Store CameraMouse to access orbit dampening
+    private CameraMouse cameraMouse;
 
     // Stored values for axes
     private float vertical;
@@ -29,6 +33,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         body = GetComponent<Rigidbody>();
+        cameraMouse = head.gameObject.GetComponentInChildren<CameraMouse>();
     }
 
     // Update is called once per frame
@@ -49,6 +54,10 @@ public class PlayerController : MonoBehaviour
         velocity += (transform.right * horizontal) * speed * Time.fixedDeltaTime;
         velocity.y = body.velocity.y;
         body.velocity = velocity;
+
+        // Set horizontal rotation of the body to the horizontal rotation of the head
+        Quaternion QT = Quaternion.Euler(transform.rotation.y, cameraMouse.localRotation.x, 0f);
+        transform.rotation = Quaternion.Lerp(transform.rotation, QT, Time.deltaTime * cameraMouse.orbitDampening);
     }
 
     // Check for when a collider hits this game object

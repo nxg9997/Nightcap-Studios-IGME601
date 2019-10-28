@@ -3,59 +3,83 @@ using System.Collections;
 /// <summary>
 /// Controls the rotation of the camera in relation to the mouse.
 /// Authors: Abhi, David
-/// Source: Coursera Course
+/// Source: https://www.youtube.com/watch?v=bVo0YLLO43s
 /// </summary>
 public class CameraMouse : MonoBehaviour
 {
+    public float cameraDistance = 10f;
+    public float cameraHeight = 5f;
+    public float mouseSensitivity = 4f;
+    //public float scrollSensitvity = 2f;
+    public float orbitDampening = 10f;
+    public float scrollDampening = 6f;
+    public float yClampMin = 30.0f;
+    public float yClampMax = 90.0f;
+    public Vector3 localRotation;
+
+    public bool cameraDisabled = false;
+
+    private Transform cam;
+    private Transform pivot;
+
+    private bool isLocked;
 
     // Use this for initialization
-    public float XSensitivity = 2f;
-    public float YSensitivity = 2f;
-    public bool clampVerticalRotation = true;
-    public float MinimumX = -90F;
-    public float MaximumX = 90F;
-    public bool smooth;
-    public float smoothTime = 5f;
-
-    // internal private variables
-    private bool isLocked = true;
-    private Quaternion m_CharacterTargetRot;
-    private Quaternion m_CameraTargetRot;
-    private Transform character;
-    private Transform cameraTransform;
-
     void Start()
     {
-        // start the game with the cursor locked
-        LockCursor(isLocked);
+        cam = transform;
+        pivot = transform.parent;
 
-        // get a reference to the character's transform (which this script should be attached to)
-        character = gameObject.transform;
-
-        // get a reference to the main camera's transform
-        cameraTransform = Camera.main.transform;
-
-        // get the location rotation of the character and the camera
-        m_CharacterTargetRot = character.localRotation;
-        m_CameraTargetRot = cameraTransform.localRotation;
+        LockCursor(true);
     }
 
-    void Update()
+
+    void LateUpdate()
     {
-        // rotate stuff based on the mouse
-        if (isLocked)
-            LookRotation();
-
-        // if ESCAPE key is pressed, then unlock the cursor
+        // Unlock cursor if pausing
         if (Input.GetButtonDown("Cancel"))
-        {
-            LockCursor(false);
-        }
+            isLocked = false;
 
-        // if the player fires, then relock the cursor
-        if (!isLocked && Input.GetButtonDown("Fire1"))
+        // If the player fires, then relock the cursor
+        else if (!isLocked && Input.GetButtonDown("Fire1"))
         {
             LockCursor(true);
+        }
+
+        if (isLocked)
+        {
+            // Rotation of the Camera based on Mouse Coordinates
+            if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+            {
+                localRotation.x += Input.GetAxis("Mouse X") * mouseSensitivity;
+                localRotation.y -= Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+                // Clamp the y Rotation to horizon and not flipping over at the top
+                if (localRotation.y < yClampMin)
+                    localRotation.y = yClampMin;
+                else if (localRotation.y > yClampMax)
+                    localRotation.y = yClampMax;
+            }
+            // Zooming Input from our Mouse Scroll Wheel
+            /*if (Input.GetAxis("Mouse ScrollWheel") != 0f)
+            {
+                float ScrollAmount = Input.GetAxis("Mouse ScrollWheel") * scrollSensitvity;
+
+                ScrollAmount *= (cameraDistance * 0.3f);
+
+                cameraDistance += ScrollAmount * -1f;
+
+                cameraDistance = Mathf.Clamp(cameraDistance, 1.5f, 100f);
+            }*/
+        }
+
+        // Actual Camera Rig Transformations
+        Quaternion QT = Quaternion.Euler(localRotation.y, localRotation.x, 0);
+        pivot.rotation = Quaternion.Lerp(pivot.rotation, QT, Time.deltaTime * orbitDampening);
+
+        if (cam.localPosition.z != cameraDistance * -1f)
+        {
+            cam.localPosition = new Vector3(0f, cameraHeight, Mathf.Lerp(cam.localPosition.z, cameraDistance * -1f, Time.deltaTime * scrollDampening));
         }
     }
 
@@ -64,65 +88,19 @@ public class CameraMouse : MonoBehaviour
         isLocked = l;
         if (isLocked)
         {
-            // make the mouse pointer invisible
+            // Make the mouse pointer invisible
             Cursor.visible = false;
 
-            // lock the mouse pointer within the game area
+            // Lock the mouse pointer within the game area
             Cursor.lockState = CursorLockMode.Locked;
         }
         else
         {
-            // make the mouse pointer visible
+            // Make the mouse pointer visible
             Cursor.visible = true;
 
-            // unlock the mouse pointer so player can click on other windows
+            // Unlock the mouse pointer so player can click on other windows
             Cursor.lockState = CursorLockMode.None;
         }
-    }
-
-    public void LookRotation()
-    {
-        //get the y and x rotation based on the Input manager
-        float yRot = Input.GetAxis("Mouse X") * XSensitivity;
-        float xRot = Input.GetAxis("Mouse Y") * YSensitivity;
-
-        // calculate the rotation
-        m_CharacterTargetRot *= Quaternion.Euler(0f, yRot, 0f);
-        m_CameraTargetRot *= Quaternion.Euler(-xRot, 0f, 0f);
-
-        // clamp the vertical rotation if specified
-        if (clampVerticalRotation)
-            m_CameraTargetRot = ClampRotationAroundXAxis(m_CameraTargetRot);
-
-        // update the character and camera based on calculations
-        if (smooth) // if smooth, then slerp over time
-        {
-            character.localRotation = Quaternion.Slerp(character.localRotation, m_CharacterTargetRot,
-                                                        smoothTime * Time.deltaTime);
-            cameraTransform.localRotation = Quaternion.Slerp(cameraTransform.localRotation, m_CameraTargetRot,
-                                                     smoothTime * Time.deltaTime);
-        }
-        else // not smooth, so just jump
-        {
-            character.localRotation = m_CharacterTargetRot;
-            cameraTransform.localRotation = m_CameraTargetRot;
-        }
-    }
-
-    // Some math ... eeck!
-    Quaternion ClampRotationAroundXAxis(Quaternion q)
-    {
-        q.x /= q.w;
-        q.y /= q.w;
-        q.z /= q.w;
-        q.w = 1.0f;
-
-        float angleX = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.x);
-
-        angleX = Mathf.Clamp(angleX, MinimumX, MaximumX);
-
-        q.x = Mathf.Tan(0.5f * Mathf.Deg2Rad * angleX);
-
-        return q;
     }
 }
