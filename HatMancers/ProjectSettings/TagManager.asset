@@ -6,6 +6,8 @@ TagManager:
   tags:
   - FireHat
   - Damage
+  - LightningHat
+  - IceHat
   layers:
   - Default
   - TransparentFX
