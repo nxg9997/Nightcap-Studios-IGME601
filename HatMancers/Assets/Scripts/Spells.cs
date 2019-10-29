@@ -71,8 +71,7 @@ public class Spells : MonoBehaviour
                     fireDelay = false;
                 }
             }
-
-            if (pData.currMagic == "lightning")
+            else if (pData.currMagic == "lightning")
             {
                 if(currBolt != null)
                 {
@@ -90,8 +89,7 @@ public class Spells : MonoBehaviour
                     lightningDelay = false;
                 }
             }
-
-            if(pData.currMagic == "ice")
+            else if(pData.currMagic == "ice")
             {
                 Destroy(currIce);
                 currIce = null;
@@ -156,7 +154,7 @@ public class Spells : MonoBehaviour
         bool hit = Physics.Raycast(start, end, out rch, 10);
         if(hit)
         {
-            Debug.Log("hit object");
+            //Debug.Log("hit object");
             if (rch.collider.gameObject.name.Contains("Player"))
             {
                 rch.collider.gameObject.GetComponent<PlayerData>().health -= bolt.GetComponent<SpellData>().damage;

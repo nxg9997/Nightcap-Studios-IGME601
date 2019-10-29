@@ -115,7 +115,7 @@ public class PlayerData : MonoBehaviour
         {
             if(col.gameObject.GetComponent<SpellData>().origin != gameObject)
                 health -= col.gameObject.GetComponent<SpellData>().damage;
-            Debug.Log(health);
+            //Debug.Log(health);
         }
     }
 
@@ -125,7 +125,7 @@ public class PlayerData : MonoBehaviour
         {
             if (col.gameObject.GetComponent<SpellData>().origin != gameObject)
                 health -= col.gameObject.GetComponent<SpellData>().damage;
-            Debug.Log(health);
+            //Debug.Log(health);
         }
     }
 }
