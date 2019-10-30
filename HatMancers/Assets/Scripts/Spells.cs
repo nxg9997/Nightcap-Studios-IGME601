@@ -5,6 +5,7 @@ using UnityEngine;
 public class Spells : MonoBehaviour
 {
     // Fire Data
+    public int playerNum;
     public GameObject fireProj;
     public float fireForce = 5.0f;
     private bool fireDelay = false;
@@ -45,19 +46,19 @@ public class Spells : MonoBehaviour
 
     void CheckInput()
     {
-        if (Input.GetAxis("Fire1") > 0 && !fireDelay && pData.currMagic == "fire")
+        if ((Input.GetAxis("LT" + playerNum) > 0 || Input.GetAxis("RT" + playerNum) > 0) && !fireDelay && pData.currMagic == "fire")
         {
             Fire();
             fireDelay = true;
             fireTime = 0;
         }
-        else if (Input.GetAxis("Fire1") > 0 && !lightningDelay && pData.currMagic == "lightning")
+        else if ((Input.GetAxis("LT" + playerNum) > 0 || Input.GetAxis("RT" + playerNum) > 0) && !lightningDelay && pData.currMagic == "lightning")
         {
             Lightning();
             lightningDelay = true;
             lightningTime = 0;
         }
-        else if (Input.GetAxis("Fire1") > 0 && pData.currMagic == "ice")
+        else if ((Input.GetAxis("LT" + playerNum) > 0 || Input.GetAxis("RT" + playerNum) > 0) && pData.currMagic == "ice")
         {
             Ice();
         }

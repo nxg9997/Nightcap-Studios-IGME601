@@ -11,6 +11,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Modifiable Attributes
+    public int playerNum;
     public Transform head;
     public float speed;
     public float rotationSpeed;
@@ -40,11 +41,11 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // Get axes values
-        vertical = Input.GetAxis("Vertical");
-        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("LSV" + playerNum);
+        horizontal = Input.GetAxis("LSH" + playerNum);
 
         // Check if player wants to jump and can jump
-        if (Input.GetAxis("Jump") > 0 && grounded)
+        if (Input.GetAxis("A" + playerNum) > 0 && grounded)
         {
             body.AddForce(transform.up * jumpForce);
         }
