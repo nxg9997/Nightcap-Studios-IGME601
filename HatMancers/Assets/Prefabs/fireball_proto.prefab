@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6047697977807270541}
   - component: {fileID: -1535614209290020664}
   - component: {fileID: 1200178948998457477}
+  - component: {fileID: 1069769111209909904}
   m_Layer: 0
   m_Name: fireball_proto
   m_TagString: Damage
@@ -136,6 +137,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 20
+  origin: {fileID: 0}
+--- !u!114 &1069769111209909904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863901900203383255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98182c14bff9f844585f80b00a8d91da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7965874513367960556
 GameObject:
   m_ObjectHideFlags: 0

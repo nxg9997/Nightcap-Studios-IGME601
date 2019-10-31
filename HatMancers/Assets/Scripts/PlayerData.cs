@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
+    // Contains data about the player's current hat/magic, spawn information, etc.
     [SerializeField]
     private GameObject currHat;
 
@@ -18,26 +19,50 @@ public class PlayerData : MonoBehaviour
 
     public float killPlaneDepth = -50;
 
+    public GameObject opponent;
     public bool testDummy = false;
+
+    private PlayerController pCtrl;
+    private CapsuleCollider cCollider;
+
+    public bool debug = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Dummies have certain components removed since they are not needed
         if (testDummy)
         {
             Destroy(GetComponentInChildren<Camera>());
             Destroy(GetComponentInChildren<PlayerController>());
         }
+
+        pCtrl = GetComponent<PlayerController>();
+        cCollider = GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (debug)
+        {
+            // Allow devs to kill a player by pressing F1 while the player object is in debug mode
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                health = 0;
+            }
+        }
+
+        // Prevent player movement if they are dead
+        pCtrl.canMove = !dead;
+        cCollider.enabled = !dead;
+
+        // If the player if dead, check if they can respawn
         if (dead)
         {
             Respawn();
         }
-        else
+        else // Otherwise, do everything else
         {
             StickyHat();
             CheckKillPlane();
@@ -45,6 +70,9 @@ public class PlayerData : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks to see if the player falls below the map, and kills them if they do
+    /// </summary>
     void CheckKillPlane()
     {
         if(transform.position.y <= killPlaneDepth)
@@ -53,6 +81,9 @@ public class PlayerData : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the current magic type if the player replaces their hat
+    /// </summary>
     void UpdateMagic()
     {
         if(currHat.tag == "FireHat")
@@ -69,6 +100,9 @@ public class PlayerData : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Keeps the current hat attached to the player's head
+    /// </summary>
     void StickyHat()
     {
         if (currHat == null) return;
@@ -76,6 +110,9 @@ public class PlayerData : MonoBehaviour
         currHat.transform.rotation = GameObject.Find("HatLocation").transform.rotation;
     }
 
+    /// <summary>
+    /// Kills the player if their health falls to/below 0
+    /// </summary>
     void CheckHealth()
     {
         if(health <= 0)
@@ -85,6 +122,9 @@ public class PlayerData : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// If the player is dead, respawn the player after a set amount of time
+    /// </summary>
     void Respawn()
     {
         GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -93,14 +133,17 @@ public class PlayerData : MonoBehaviour
         {
             dead = false;
             GetComponent<MeshRenderer>().enabled = true;
-            transform.position = spawn.transform.position;
+            //transform.position = spawn.transform.position;
             health = 100;
             spawnTimer = 0;
+
+            transform.position = GameObject.Find("Manager").GetComponent<RespawnManager>().FindSpawnPoint(opponent);
         }
     }
 
     void OnCollisionEnter(Collision col)
     {
+        // Updates the current hat if one is picked up
         if (col.gameObject.tag.Contains("Hat"))
         {
             if(currHat != null)
@@ -111,7 +154,7 @@ public class PlayerData : MonoBehaviour
             currHat.GetComponent<Collider>().enabled = false;
             UpdateMagic();
         }
-        else if(col.gameObject.tag == "Damage")
+        else if(col.gameObject.tag == "Damage") // Damages the player if they are hit by a damaging source (denoted by the "Damage" tag)
         {
             if(col.gameObject.GetComponent<SpellData>().origin != gameObject)
                 health -= col.gameObject.GetComponent<SpellData>().damage;
@@ -121,7 +164,7 @@ public class PlayerData : MonoBehaviour
 
     void OnTriggerStay(Collider col)
     {
-        if (col.gameObject.tag == "Damage")
+        if (col.gameObject.tag == "Damage") // Damages the player if they are hit by a damaging source (denoted by the "Damage" tag)
         {
             if (col.gameObject.GetComponent<SpellData>().origin != gameObject)
                 health -= col.gameObject.GetComponent<SpellData>().damage;
