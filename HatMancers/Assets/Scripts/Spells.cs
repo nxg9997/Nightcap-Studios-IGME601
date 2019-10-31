@@ -37,12 +37,16 @@ public class Spells : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Only check input if the player is human-controlled
         if (!pData.testDummy)
         {
             CheckInput();
         }
     }
 
+    /// <summary>
+    /// Use magic based on the current hat equipped & if the player clicks the shoot button
+    /// </summary>
     void CheckInput()
     {
         if (Input.GetAxis("Fire1") > 0 && !fireDelay && pData.currMagic == "fire")
@@ -98,6 +102,9 @@ public class Spells : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Shoots a fireball if the fire hat is equipped. Fireballs can only be launched after a set interval.
+    /// </summary>
     void Fire()
     {
         GameObject fireball = GameObject.Instantiate(fireProj, transform.position + transform.forward * 2, Quaternion.identity);
@@ -115,6 +122,9 @@ public class Spells : MonoBehaviour
         fireball.GetComponent<Rigidbody>().AddForce(fireball.transform.forward * fireForce);
     }
 
+    /// <summary>
+    /// Creates a lightning bolt (sniper shot) that gets deleted after a set period of time. A raycast is used to detect a hit.
+    /// </summary>
     void Lightning()
     {
         GameObject bolt = GameObject.Instantiate(lightningObj);
@@ -162,6 +172,9 @@ public class Spells : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// An ice "flamethrower" is sprayed in front of the player (close range) that deals damage over time.
+    /// </summary>
     void Ice()
     {
         if(currIce == null)
