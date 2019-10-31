@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     // Flags
     private bool grounded;
+    public bool canMove = true;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!canMove) return;
+
         // Get axes values
         vertical = Input.GetAxis("Vertical");
         horizontal = Input.GetAxis("Horizontal");

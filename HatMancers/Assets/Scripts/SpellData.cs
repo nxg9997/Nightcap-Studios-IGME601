@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpellData : MonoBehaviour
 {
+    // Holds information about the spell this script is attached to
     public int damage = 20;
     public GameObject origin;
 
