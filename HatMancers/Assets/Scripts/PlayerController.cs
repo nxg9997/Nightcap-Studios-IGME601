@@ -5,7 +5,7 @@ using UnityEngine;
 /// Handles all inputs from the player. Currently consists of:
 ///     - Movement
 ///     - Jumping
-/// Authors: Abhi, David
+/// Authors: Abhi, David, Michael
 /// Code Source: https://forum.unity.com/threads/proper-velocity-based-movement-101.462598/
 /// </summary>
 public class PlayerController : MonoBehaviour
@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
     // Store CameraMouse to access orbit dampening
     private CameraMouse cameraMouse;
 
+    // Storing WizardAnimScript to control animations
+    private WizardAnimScript animScript;
+
     // Stored values for axes
     private float vertical;
     private float horizontal;
@@ -35,6 +38,7 @@ public class PlayerController : MonoBehaviour
     {
         body = GetComponent<Rigidbody>();
         cameraMouse = head.gameObject.GetComponentInChildren<CameraMouse>();
+        animScript = this.gameObject.GetComponentInChildren<WizardAnimScript>();
     }
 
     // Update is called once per frame
@@ -61,6 +65,25 @@ public class PlayerController : MonoBehaviour
         // Set horizontal rotation of the body to the horizontal rotation of the head
         Quaternion QT = Quaternion.Euler(transform.rotation.y, cameraMouse.localRotation.x, 0f);
         transform.rotation = Quaternion.Lerp(transform.rotation, QT, Time.deltaTime * cameraMouse.orbitDampening);
+
+        /*  ======================
+            ===== ANIMATIONS =====
+            ======================
+        */
+
+        // IF the player is grounded & the player is NOT moving...
+        if (grounded && vertical == 0f && horizontal == 0f)
+        {
+            // Playing the idle animation
+            animScript.Idle();
+        }
+
+        // IF the player is grounded & the player is moving...
+        if (grounded && (vertical != 0f || horizontal != 0f))
+        {
+            // Play the running animation
+            animScript.Run();
+        }
     }
 
     // Check for when a collider hits this game object
