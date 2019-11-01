@@ -75,8 +75,9 @@ public class CameraMouse : MonoBehaviour
         }
 
         // Actual Camera Rig Transformations
-        Quaternion QT = Quaternion.Euler(localRotation.y, localRotation.x, 0);
-        pivot.rotation = Quaternion.Lerp(pivot.rotation, QT, Time.deltaTime * orbitDampening);
+        pivot.rotation = Quaternion.Euler(localRotation.y, localRotation.x, 0);
+        //Quaternion QT = Quaternion.Euler(localRotation.y, localRotation.x, 0);
+        //pivot.rotation = Quaternion.Lerp(pivot.rotation, QT, Time.deltaTime * orbitDampening);
 
         if (cam.localPosition.z != cameraDistance * -1f)
         {

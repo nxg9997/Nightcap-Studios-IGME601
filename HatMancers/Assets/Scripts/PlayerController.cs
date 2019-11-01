@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void LateUpdate()
     {
         if (!canMove) return;
 
@@ -54,14 +54,15 @@ public class PlayerController : MonoBehaviour
         }
 
         // Create own gravity for rigidbody
-        Vector3 velocity = (transform.forward * vertical) * speed * Time.fixedDeltaTime;
-        velocity += (transform.right * horizontal) * speed * Time.fixedDeltaTime;
+        Vector3 velocity = (transform.forward * vertical) * speed * Time.deltaTime;
+        velocity += (transform.right * horizontal) * speed * Time.deltaTime;
         velocity.y = body.velocity.y;
         body.velocity = velocity;
 
         // Set horizontal rotation of the body to the horizontal rotation of the head
-        Quaternion QT = Quaternion.Euler(transform.rotation.y, cameraMouse.localRotation.x, 0f);
-        transform.rotation = Quaternion.Lerp(transform.rotation, QT, Time.deltaTime * cameraMouse.orbitDampening);
+        transform.rotation = Quaternion.Euler(transform.rotation.y, cameraMouse.localRotation.x, 0f);
+        //Quaternion QT = Quaternion.Euler(transform.rotation.y, cameraMouse.localRotation.x, 0f);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, QT, Time.deltaTime * cameraMouse.orbitDampening);
     }
 
     // Check for when a collider hits this game object
