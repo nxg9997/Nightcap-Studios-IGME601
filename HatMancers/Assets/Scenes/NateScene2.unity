@@ -294,6 +294,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1609524987555010123, guid: 76575620fd705d24fadc7f4472322a1f,
+        type: 3}
+      propertyPath: playerNum
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76575620fd705d24fadc7f4472322a1f, type: 3}
 --- !u!1 &627311131
@@ -943,15 +948,15 @@ PrefabInstance:
       propertyPath: debug
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1609524987555010123, guid: 76575620fd705d24fadc7f4472322a1f,
+    - target: {fileID: 1609524988100388328, guid: 76575620fd705d24fadc7f4472322a1f,
         type: 3}
-      propertyPath: cameraDistance
-      value: 18
+      propertyPath: m_Constraints
+      value: 112
       objectReference: {fileID: 0}
-    - target: {fileID: 1609524987555010123, guid: 76575620fd705d24fadc7f4472322a1f,
+    - target: {fileID: 1609524988100388334, guid: 76575620fd705d24fadc7f4472322a1f,
         type: 3}
-      propertyPath: cameraHeight
-      value: 10
+      propertyPath: playerNum
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1166933313, guid: 76575620fd705d24fadc7f4472322a1f, type: 3}
       propertyPath: lightningObj
@@ -967,5 +972,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2963749747300618296, guid: 9536b2af86c2c21459e5f30aff964fa4,
         type: 3}
+    - target: {fileID: 1166933313, guid: 76575620fd705d24fadc7f4472322a1f, type: 3}
+      propertyPath: playerNum
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609524987555010123, guid: 76575620fd705d24fadc7f4472322a1f,
+        type: 3}
+      propertyPath: cameraDistance
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609524987555010123, guid: 76575620fd705d24fadc7f4472322a1f,
+        type: 3}
+      propertyPath: cameraHeight
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609524987555010123, guid: 76575620fd705d24fadc7f4472322a1f,
+        type: 3}
+      propertyPath: playerNum
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76575620fd705d24fadc7f4472322a1f, type: 3}

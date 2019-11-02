@@ -7,6 +7,7 @@ using System.Collections;
 /// </summary>
 public class CameraMouse : MonoBehaviour
 {
+    public int playerNum;
     public float cameraDistance = 10f;
     public float cameraHeight = 5f;
     public float mouseSensitivity = 4f;
@@ -37,11 +38,11 @@ public class CameraMouse : MonoBehaviour
     void LateUpdate()
     {
         // Unlock cursor if pausing
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("STA" + playerNum))
             isLocked = false;
 
         // If the player fires, then relock the cursor
-        else if (!isLocked && Input.GetButtonDown("Fire1"))
+        else if (!isLocked && (Input.GetButtonDown("LT" + playerNum) || Input.GetButtonDown("RT" + playerNum)))
         {
             LockCursor(true);
         }
@@ -49,10 +50,10 @@ public class CameraMouse : MonoBehaviour
         if (isLocked)
         {
             // Rotation of the Camera based on Mouse Coordinates
-            if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+            if (Input.GetAxis("RSH" + playerNum) != 0 || Input.GetAxis("RSV" + playerNum) != 0)
             {
-                localRotation.x += Input.GetAxis("Mouse X") * mouseSensitivity;
-                localRotation.y -= Input.GetAxis("Mouse Y") * mouseSensitivity;
+                localRotation.x += Input.GetAxis("RSH" + playerNum) * mouseSensitivity;
+                localRotation.y -= Input.GetAxis("RSV" + playerNum) * mouseSensitivity;
 
                 // Clamp the y Rotation to horizon and not flipping over at the top
                 if (localRotation.y < yClampMin)
@@ -74,8 +75,9 @@ public class CameraMouse : MonoBehaviour
         }
 
         // Actual Camera Rig Transformations
-        Quaternion QT = Quaternion.Euler(localRotation.y, localRotation.x, 0);
-        pivot.rotation = Quaternion.Lerp(pivot.rotation, QT, Time.deltaTime * orbitDampening);
+        pivot.rotation = Quaternion.Euler(localRotation.y, localRotation.x, 0);
+        //Quaternion QT = Quaternion.Euler(localRotation.y, localRotation.x, 0);
+        //pivot.rotation = Quaternion.Lerp(pivot.rotation, QT, Time.deltaTime * orbitDampening);
 
         if (cam.localPosition.z != cameraDistance * -1f)
         {

@@ -11,6 +11,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // Modifiable Attributes
+    public int playerNum;
     public Transform head;
     public float speed;
     public float rotationSpeed;
@@ -38,29 +39,30 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void LateUpdate()
     {
         if (!canMove) return;
 
         // Get axes values
-        vertical = Input.GetAxis("Vertical");
-        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("LSV" + playerNum);
+        horizontal = Input.GetAxis("LSH" + playerNum);
 
         // Check if player wants to jump and can jump
-        if (Input.GetAxis("Jump") > 0 && grounded)
+        if (Input.GetAxis("A" + playerNum) > 0 && grounded)
         {
             body.AddForce(transform.up * jumpForce);
         }
 
         // Create own gravity for rigidbody
-        Vector3 velocity = (transform.forward * vertical) * speed * Time.fixedDeltaTime;
-        velocity += (transform.right * horizontal) * speed * Time.fixedDeltaTime;
+        Vector3 velocity = (transform.forward * vertical) * speed * Time.deltaTime;
+        velocity += (transform.right * horizontal) * speed * Time.deltaTime;
         velocity.y = body.velocity.y;
         body.velocity = velocity;
 
         // Set horizontal rotation of the body to the horizontal rotation of the head
-        Quaternion QT = Quaternion.Euler(transform.rotation.y, cameraMouse.localRotation.x, 0f);
-        transform.rotation = Quaternion.Lerp(transform.rotation, QT, Time.deltaTime * cameraMouse.orbitDampening);
+        transform.rotation = Quaternion.Euler(transform.rotation.y, cameraMouse.localRotation.x, 0f);
+        //Quaternion QT = Quaternion.Euler(transform.rotation.y, cameraMouse.localRotation.x, 0f);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, QT, Time.deltaTime * cameraMouse.orbitDampening);
     }
 
     // Check for when a collider hits this game object
