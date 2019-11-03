@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Contains all the Player gameplay data
+/// Authors: Nate, David, Michael
+/// </summary>
 public class PlayerData : MonoBehaviour
 {
     // Contains data about the player's current hat/magic, spawn information, etc.
@@ -10,6 +13,7 @@ public class PlayerData : MonoBehaviour
 
     public string currMagic = "none";
 
+    public int maxHealth = 100;
     public int health = 100;
 
     public GameObject spawn;
@@ -154,7 +158,7 @@ public class PlayerData : MonoBehaviour
             dead = false;
             GetComponent<MeshRenderer>().enabled = true;
             //transform.position = spawn.transform.position;
-            health = 100;
+            health = maxHealth;
             spawnTimer = 0;
 
             transform.position = GameObject.Find("Manager").GetComponent<RespawnManager>().FindSpawnPoint(opponent);

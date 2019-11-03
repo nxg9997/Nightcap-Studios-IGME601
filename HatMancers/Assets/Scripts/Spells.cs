@@ -26,6 +26,11 @@ public class Spells : MonoBehaviour
     public GameObject iceObj;
     private GameObject currIce;
 
+    // UI Color
+    public Color UIColor_Fire;
+    public Color UIColor_Ice;
+    public Color UIColor_Lightning;
+
     // Player Data Script
     private PlayerData pData;
 
@@ -33,6 +38,10 @@ public class Spells : MonoBehaviour
     void Start()
     {
         pData = GetComponent<PlayerData>();
+
+        // Setting the spell charge time variables
+        fireTime = fireDelayTime;
+        lightningTime = lightningDelayTime;
     }
 
     // Update is called once per frame
@@ -188,5 +197,70 @@ public class Spells : MonoBehaviour
             currIce.transform.position = transform.position + transform.forward * 1.5f;
             currIce.transform.rotation = transform.rotation;
         }
+    }
+
+    /// <summary>
+    /// Returns the charge percent of the current spell. (1.0 = ready, 0.0 = full charge needed)
+    /// </summary>
+    public float SpellChargePercent()
+    {
+        // Defining the result value
+        float result = 0f;
+
+        // SWITCH for the current magic...
+        switch (pData.currMagic)
+        {
+            case "fire":
+                result = (fireTime / fireDelayTime);
+                break;
+            case "lightning":
+                result = (lightningTime / lightningDelayTime);
+                break;
+            case "none":
+            case "ice":
+                result = 1f;
+                break;
+            // (Undefined Magic)
+            default:
+                Debug.LogError("You have not defined the \"" + pData.currMagic + "\" case in SpellChargePercent()!");
+                break;
+        }
+
+        // Clamping the result
+        Mathf.Clamp(result, 0f, 1f);
+
+        // Returning the result
+        return result;
+    }
+
+    /// <summary>
+    /// Returns the UI color of the spell.
+    /// </summary>
+    public Color SpellColorUI()
+    {
+        // Defining the result color
+        Color result = new Color(255, 255, 255);
+
+        // SWITCH for the current magic...
+        switch (pData.currMagic)
+        {
+            case "none":
+                break;
+            case "fire":
+                result = UIColor_Fire;
+                break;
+            case "lightning":
+                result = UIColor_Lightning;
+                break;
+            case "ice":
+                result = UIColor_Ice;
+                break;
+            default:
+                Debug.LogError("You have not defined the \"" + pData.currMagic + "\" case in SpellColorUI()!");
+                break;
+        }
+
+        // Returning the result color
+        return result;
     }
 }
