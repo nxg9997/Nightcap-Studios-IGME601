@@ -38,6 +38,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimpleLightningBoltAnimatedPrefab Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 178460, guid: a84cb58ef7faa67488076810242453b9, type: 3}
+      propertyPath: m_TagString
+      value: Damage
+      objectReference: {fileID: 0}
     - target: {fileID: 430986, guid: a84cb58ef7faa67488076810242453b9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

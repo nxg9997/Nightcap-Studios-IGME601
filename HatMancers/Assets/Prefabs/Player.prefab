@@ -259,14 +259,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1609524988100388337}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 2.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1609524987501009860}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &1609524988100388330
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -338,7 +338,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -358,7 +358,8 @@ MonoBehaviour:
   head: {fileID: 1609524987501009860}
   speed: 500
   rotationSpeed: 150
-  jumpForce: 50
+  jumpSpeed: 7.5
+  gravityForce: 10
   canMove: 1
 --- !u!114 &1166933313
 MonoBehaviour:
@@ -377,12 +378,13 @@ MonoBehaviour:
     type: 3}
   fireForce: 500
   fireDelayTime: 0.5
-  lightningObj: {fileID: 0}
+  lightningObj: {fileID: 7279632303630109400, guid: 9531fb4f59b8cde469fa52b2aa565356,
+    type: 3}
   lightningDelayTime: 5
-  lightningDist: 10
+  lightningDist: 100
   lightningPersistTime: 2
   lightningPersistTimer: 0
-  iceObj: {fileID: 0}
+  iceObj: {fileID: 2963749747300618296, guid: 9536b2af86c2c21459e5f30aff964fa4, type: 3}
 --- !u!114 &1166933320
 MonoBehaviour:
   m_ObjectHideFlags: 0
