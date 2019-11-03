@@ -162,7 +162,7 @@ public class Spells : MonoBehaviour
         currBolt = bolt;
 
         RaycastHit rch;
-        bool hit = Physics.Raycast(start, end, out rch, 10);
+        bool hit = Physics.Raycast(start, end, out rch, lightningDist);
         if(hit)
         {
             //Debug.Log("hit object");

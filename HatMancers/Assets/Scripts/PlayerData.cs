@@ -176,7 +176,7 @@ public class PlayerData : MonoBehaviour
         }
         else if(col.gameObject.tag == "Damage") // Damages the player if they are hit by a damaging source (denoted by the "Damage" tag)
         {
-            if(col.gameObject.GetComponent<SpellData>().origin != gameObject)
+            if(col.gameObject.GetComponent<SpellData>().origin.name != gameObject.name)
                 health -= col.gameObject.GetComponent<SpellData>().damage;
             //Debug.Log(health);
         }
@@ -186,7 +186,7 @@ public class PlayerData : MonoBehaviour
     {
         if (col.gameObject.tag == "Damage") // Damages the player if they are hit by a damaging source (denoted by the "Damage" tag)
         {
-            if (col.gameObject.GetComponent<SpellData>().origin != gameObject)
+            if (col.gameObject.GetComponent<SpellData>().origin.name != gameObject.name)
                 health -= col.gameObject.GetComponent<SpellData>().damage;
             //Debug.Log(health);
         }
