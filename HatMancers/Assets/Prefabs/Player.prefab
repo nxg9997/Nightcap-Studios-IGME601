@@ -358,7 +358,8 @@ MonoBehaviour:
   head: {fileID: 1609524987501009860}
   speed: 500
   rotationSpeed: 150
-  jumpForce: 50
+  jumpSpeed: 7.5
+  gravityForce: 10
   canMove: 1
 --- !u!114 &1166933313
 MonoBehaviour:
