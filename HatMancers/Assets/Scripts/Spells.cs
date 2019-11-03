@@ -181,6 +181,7 @@ public class Spells : MonoBehaviour
         if(currIce == null)
         {
             currIce = GameObject.Instantiate(iceObj, transform.position + transform.forward * 1.5f, transform.rotation);
+            currIce.GetComponent<SpellData>().origin = gameObject;
         }
         else
         {
