@@ -24,6 +24,7 @@ public class PlayerData : MonoBehaviour
 
     private PlayerController pCtrl;
     private CapsuleCollider cCollider;
+    private GameObject hatPosition;
 
     public bool debug = false;
 
@@ -39,6 +40,25 @@ public class PlayerData : MonoBehaviour
 
         pCtrl = GetComponent<PlayerController>();
         cCollider = GetComponent<CapsuleCollider>();
+
+        if(pCtrl.playerNum == 1)
+        {
+            opponent = GameObject.Find("Player2");
+        }
+        else if (pCtrl.playerNum == 2)
+        {
+            opponent = GameObject.Find("Player1");
+        }
+
+        Transform[] children = GetComponentsInChildren<Transform>();
+        foreach(Transform g in children)
+        {
+            if(g.gameObject.name == "HatLocation")
+            {
+                hatPosition = g.gameObject;
+                break;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -106,8 +126,8 @@ public class PlayerData : MonoBehaviour
     void StickyHat()
     {
         if (currHat == null) return;
-        currHat.transform.position = GameObject.Find("HatLocation").transform.position;
-        currHat.transform.rotation = GameObject.Find("HatLocation").transform.rotation;
+        currHat.transform.position = hatPosition.transform.position;
+        currHat.transform.rotation = hatPosition.transform.rotation;
     }
 
     /// <summary>
@@ -156,7 +176,7 @@ public class PlayerData : MonoBehaviour
         }
         else if(col.gameObject.tag == "Damage") // Damages the player if they are hit by a damaging source (denoted by the "Damage" tag)
         {
-            if(col.gameObject.GetComponent<SpellData>().origin != gameObject)
+            if(col.gameObject.GetComponent<SpellData>().origin.name != gameObject.name)
                 health -= col.gameObject.GetComponent<SpellData>().damage;
             //Debug.Log(health);
         }
@@ -166,7 +186,7 @@ public class PlayerData : MonoBehaviour
     {
         if (col.gameObject.tag == "Damage") // Damages the player if they are hit by a damaging source (denoted by the "Damage" tag)
         {
-            if (col.gameObject.GetComponent<SpellData>().origin != gameObject)
+            if (col.gameObject.GetComponent<SpellData>().origin.name != gameObject.name)
                 health -= col.gameObject.GetComponent<SpellData>().damage;
             //Debug.Log(health);
         }

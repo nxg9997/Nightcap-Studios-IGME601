@@ -162,7 +162,7 @@ public class Spells : MonoBehaviour
         currBolt = bolt;
 
         RaycastHit rch;
-        bool hit = Physics.Raycast(start, end, out rch, 10);
+        bool hit = Physics.Raycast(start, end, out rch, lightningDist);
         if(hit)
         {
             //Debug.Log("hit object");
@@ -181,6 +181,7 @@ public class Spells : MonoBehaviour
         if(currIce == null)
         {
             currIce = GameObject.Instantiate(iceObj, transform.position + transform.forward * 1.5f, transform.rotation);
+            currIce.GetComponent<SpellData>().origin = gameObject;
         }
         else
         {

@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     public Transform head;
     public float speed;
     public float rotationSpeed;
-    public float jumpForce;
+    public float jumpSpeed; // Initial jump velocity
+    public float gravityForce; // Force of gravity weighing down in air
 
     // Rigidbody for physics
     private Rigidbody body;
@@ -54,7 +55,15 @@ public class PlayerController : MonoBehaviour
         // Check if player wants to jump and can jump
         if (Input.GetAxis("A" + playerNum) > 0 && grounded)
         {
-            body.AddForce(transform.up * jumpForce);
+            // Set the vertical velocity immediately
+            Vector3 newVelocity = body.velocity;
+            newVelocity.y = jumpSpeed;
+            body.velocity = newVelocity;
+        }
+        else if (Input.GetAxis("A" + playerNum) == 0 && !grounded)
+        {
+            // Set counter force
+            body.AddForce(Vector3.down * gravityForce);
         }
 
         // Create own gravity for rigidbody

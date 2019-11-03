@@ -274,7 +274,22 @@ PrefabInstance:
     - target: {fileID: 1609524988100388334, guid: 76575620fd705d24fadc7f4472322a1f,
         type: 3}
       propertyPath: jumpForce
-      value: 50
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609524988100388334, guid: 76575620fd705d24fadc7f4472322a1f,
+        type: 3}
+      propertyPath: jumpSpeed
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609524988100388334, guid: 76575620fd705d24fadc7f4472322a1f,
+        type: 3}
+      propertyPath: jumpTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609524988100388334, guid: 76575620fd705d24fadc7f4472322a1f,
+        type: 3}
+      propertyPath: gravityForce
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1166933313, guid: 76575620fd705d24fadc7f4472322a1f, type: 3}
       propertyPath: playerNum
@@ -851,7 +866,27 @@ PrefabInstance:
     - target: {fileID: 1609524988100388334, guid: 76575620fd705d24fadc7f4472322a1f,
         type: 3}
       propertyPath: jumpForce
-      value: 75
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609524988100388334, guid: 76575620fd705d24fadc7f4472322a1f,
+        type: 3}
+      propertyPath: canMove
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609524988100388334, guid: 76575620fd705d24fadc7f4472322a1f,
+        type: 3}
+      propertyPath: jumpSpeed
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609524988100388334, guid: 76575620fd705d24fadc7f4472322a1f,
+        type: 3}
+      propertyPath: jumpTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1609524988100388334, guid: 76575620fd705d24fadc7f4472322a1f,
+        type: 3}
+      propertyPath: gravityForce
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1166933313, guid: 76575620fd705d24fadc7f4472322a1f, type: 3}
       propertyPath: playerNum

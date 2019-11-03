@@ -358,7 +358,8 @@ MonoBehaviour:
   head: {fileID: 1609524987501009860}
   speed: 500
   rotationSpeed: 150
-  jumpForce: 50
+  jumpSpeed: 7.5
+  gravityForce: 10
   canMove: 1
 --- !u!114 &1166933313
 MonoBehaviour:
@@ -377,12 +378,13 @@ MonoBehaviour:
     type: 3}
   fireForce: 500
   fireDelayTime: 0.5
-  lightningObj: {fileID: 0}
+  lightningObj: {fileID: 7279632303630109400, guid: 9531fb4f59b8cde469fa52b2aa565356,
+    type: 3}
   lightningDelayTime: 5
-  lightningDist: 10
+  lightningDist: 100
   lightningPersistTime: 2
   lightningPersistTimer: 0
-  iceObj: {fileID: 0}
+  iceObj: {fileID: 2963749747300618296, guid: 9536b2af86c2c21459e5f30aff964fa4, type: 3}
 --- !u!114 &1166933320
 MonoBehaviour:
   m_ObjectHideFlags: 0
