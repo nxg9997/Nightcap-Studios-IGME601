@@ -1,20 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &2066530689502642437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8037843007379134478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34bff4362e9193a40979c0b757181c91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 1
-  test_isIdle: 0
-  test_isRunning: 0
 --- !u!1 &2066530689608738465
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5beb83cd5deafa438fb75026146f683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNum: 1
   cameraDistance: 12
   cameraHeight: 5
   mouseSensitivity: 4
@@ -229,6 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54f873b0f2a7c9d4b87a4aa907edb00c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNum: 1
   head: {fileID: 2066530691296663018}
   speed: 300
   rotationSpeed: 150
@@ -246,6 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a76fdafaad69404bac3ddefaa541a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNum: 1
   fireProj: {fileID: 1863901900203383255, guid: d33073ec7df17964384db75aaf8e2148,
     type: 3}
   fireForce: 500
@@ -371,6 +359,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2066530689502642437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8037843007379134478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34bff4362e9193a40979c0b757181c91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 1
+  test_isIdle: 0
+  test_isRunning: 0
 --- !u!1001 &2066530689502642439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -393,11 +396,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: 1cef4b8131943354daaa5064a512ec48,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 9b4f74d83ffec4645bfa9df6def900d3, type: 2}
     - target: {fileID: -4216859302048453862, guid: 1cef4b8131943354daaa5064a512ec48,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -478,6 +476,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: 1cef4b8131943354daaa5064a512ec48,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 9b4f74d83ffec4645bfa9df6def900d3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1cef4b8131943354daaa5064a512ec48, type: 3}
 --- !u!1 &8037843007379134478 stripped
