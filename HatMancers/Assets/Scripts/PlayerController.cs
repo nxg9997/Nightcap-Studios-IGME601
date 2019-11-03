@@ -5,12 +5,13 @@ using UnityEngine;
 /// Handles all inputs from the player. Currently consists of:
 ///     - Movement
 ///     - Jumping
-/// Authors: Abhi, David
+/// Authors: Abhi, David, Michael
 /// Code Source: https://forum.unity.com/threads/proper-velocity-based-movement-101.462598/
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
     // Modifiable Attributes
+    public int playerNum;
     public Transform head;
     public float speed;
     public float rotationSpeed;
@@ -22,42 +23,69 @@ public class PlayerController : MonoBehaviour
     // Store CameraMouse to access orbit dampening
     private CameraMouse cameraMouse;
 
+    // Storing WizardAnimScript to control animations
+    private WizardAnimScript animScript;
+
     // Stored values for axes
     private float vertical;
     private float horizontal;
 
     // Flags
     private bool grounded;
+    public bool canMove = true;
 
     // Start is called before the first frame update
     void Start()
     {
         body = GetComponent<Rigidbody>();
         cameraMouse = head.gameObject.GetComponentInChildren<CameraMouse>();
+        animScript = this.gameObject.GetComponentInChildren<WizardAnimScript>();
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void LateUpdate()
     {
+        if (!canMove) return;
+
         // Get axes values
-        vertical = Input.GetAxis("Vertical");
-        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("LSV" + playerNum);
+        horizontal = Input.GetAxis("LSH" + playerNum);
 
         // Check if player wants to jump and can jump
-        if (Input.GetAxis("Jump") > 0 && grounded)
+        if (Input.GetAxis("A" + playerNum) > 0 && grounded)
         {
             body.AddForce(transform.up * jumpForce);
         }
 
         // Create own gravity for rigidbody
-        Vector3 velocity = (transform.forward * vertical) * speed * Time.fixedDeltaTime;
-        velocity += (transform.right * horizontal) * speed * Time.fixedDeltaTime;
+        Vector3 velocity = (transform.forward * vertical) * speed * Time.deltaTime;
+        velocity += (transform.right * horizontal) * speed * Time.deltaTime;
         velocity.y = body.velocity.y;
         body.velocity = velocity;
 
         // Set horizontal rotation of the body to the horizontal rotation of the head
-        Quaternion QT = Quaternion.Euler(transform.rotation.y, cameraMouse.localRotation.x, 0f);
-        transform.rotation = Quaternion.Lerp(transform.rotation, QT, Time.deltaTime * cameraMouse.orbitDampening);
+        transform.rotation = Quaternion.Euler(transform.rotation.y, cameraMouse.localRotation.x, 0f);
+        //Quaternion QT = Quaternion.Euler(transform.rotation.y, cameraMouse.localRotation.x, 0f);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, QT, Time.deltaTime * cameraMouse.orbitDampening);
+
+        /*  ======================
+            ===== ANIMATIONS =====
+            ======================
+        */
+
+        // IF the player is grounded & the player is NOT moving...
+        if (grounded && vertical == 0f && horizontal == 0f)
+        {
+            // Playing the idle animation
+            animScript.Idle();
+        }
+
+        // IF the player is grounded & the player is moving...
+        if (grounded && (vertical != 0f || horizontal != 0f))
+        {
+            // Play the running animation
+            animScript.Run();
+        }
     }
 
     // Check for when a collider hits this game object

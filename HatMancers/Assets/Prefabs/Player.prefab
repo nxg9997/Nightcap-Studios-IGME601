@@ -219,6 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5beb83cd5deafa438fb75026146f683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNum: 0
   cameraDistance: 12
   cameraHeight: 5
   mouseSensitivity: 4
@@ -325,7 +326,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &1609524988100388332
 CapsuleCollider:
@@ -353,10 +354,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54f873b0f2a7c9d4b87a4aa907edb00c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNum: 0
   head: {fileID: 1609524987501009860}
-  speed: 300
+  speed: 500
   rotationSpeed: 150
-  jumpForce: 150
+  jumpForce: 50
+  canMove: 1
 --- !u!114 &1166933313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,6 +372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a76fdafaad69404bac3ddefaa541a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNum: 0
   fireProj: {fileID: 1863901900203383255, guid: d33073ec7df17964384db75aaf8e2148,
     type: 3}
   fireForce: 500
@@ -398,4 +402,6 @@ MonoBehaviour:
   spawnTime: 3
   dead: 0
   killPlaneDepth: -50
+  opponent: {fileID: 0}
   testDummy: 0
+  debug: 0
