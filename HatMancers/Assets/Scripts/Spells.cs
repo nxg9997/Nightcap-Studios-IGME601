@@ -37,7 +37,6 @@ public class Spells : MonoBehaviour
     // Other
     private GameObject spellOrigin;
     private Camera cam;
-    public float aimDistance;
 
     // Start is called before the first frame update
     void Start()
@@ -50,7 +49,6 @@ public class Spells : MonoBehaviour
             if(t.gameObject.name == "SpellOrigin")
             {
                 spellOrigin = t.gameObject;
-                //break;
             }
 
             else if(t.gameObject.name == "Main Camera")
