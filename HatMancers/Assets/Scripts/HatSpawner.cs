@@ -12,6 +12,9 @@ public class HatSpawner : MonoBehaviour
     public float spawnHeight;
     private float currTimer = 0;
 
+    public int unclaimedLimit = 20;
+    public int unclaimedHatCount = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +36,9 @@ public class HatSpawner : MonoBehaviour
     {
         for(int i = 0; i < spawnCount; i++)
         {
+            if (unclaimedHatCount >= unclaimedLimit) break;
+
+            unclaimedHatCount++;
             int hatIndex = Random.Range(0, hats.Length);
 
             float rX = Random.Range(bounds.GetComponent<ArenaBounds>().PointA.x, bounds.GetComponent<ArenaBounds>().PointB.x);
