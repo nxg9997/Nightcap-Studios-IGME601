@@ -179,7 +179,7 @@ public class Spells : MonoBehaviour
         bool hit = Physics.Raycast(start, end, out rch, lightningDist);
         if(hit)
         {
-            //Debug.Log("hit object");
+            Debug.Log("hit object " + rch.collider.gameObject.name);
             if (rch.collider.gameObject.name.Contains("Player"))
             {
                 rch.collider.gameObject.GetComponent<PlayerData>().health -= bolt.GetComponent<SpellData>().damage;
