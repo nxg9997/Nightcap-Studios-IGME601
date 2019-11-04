@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 1
-  cameraDistance: 12
-  cameraHeight: 5
+  cameraDistance: 20
+  cameraHeight: 10
   mouseSensitivity: 4
   orbitDampening: 10
   scrollDampening: 6
@@ -218,9 +218,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 1
   head: {fileID: 2066530691296663018}
-  speed: 500
+  speed: 1000
   rotationSpeed: 150
-  jumpSpeed: 7.5
+  jumpSpeed: 20
   gravityForce: 10
   canMove: 1
 --- !u!114 &2066530691247582554
@@ -242,7 +242,7 @@ MonoBehaviour:
   fireDelayTime: 0.5
   lightningObj: {fileID: 7279632303630109400, guid: 9531fb4f59b8cde469fa52b2aa565356,
     type: 3}
-  lightningDelayTime: 5
+  lightningDelayTime: 2
   lightningDist: 200
   lightningPersistTime: 2
   lightningPersistTimer: 0

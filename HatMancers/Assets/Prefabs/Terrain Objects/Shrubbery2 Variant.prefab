@@ -11,8 +11,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.6143494, y: 1.4026489, z: 1.709816}
+  m_Center: {x: 0.0041503906, y: 0.6952896, z: 0.051883698}
 --- !u!1001 &2780353923993492871
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20,11 +20,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 633e1c7eb5b0a1c44adc12281cd5f6b0,
-        type: 3}
-      propertyPath: m_Name
-      value: Shrubbery2 Variant
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 633e1c7eb5b0a1c44adc12281cd5f6b0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -94,6 +89,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 633e1c7eb5b0a1c44adc12281cd5f6b0,
+        type: 3}
+      propertyPath: m_Name
+      value: Shrubbery2 Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 633e1c7eb5b0a1c44adc12281cd5f6b0, type: 3}
