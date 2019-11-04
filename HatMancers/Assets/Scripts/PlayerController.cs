@@ -96,7 +96,8 @@ public class PlayerController : MonoBehaviour
             animScript.Run();
         }
 
-        if (animScript.IsIdling() && (Input.GetAxis("LT1") || Input.GetAxis("RT1")))
+        // IF the player presses the shoot button...
+        if (Input.GetAxis("LT" + playerNum) > 0 || Input.GetAxis("RT" + playerNum) > 0)
         {
             // Play the shooting animation
             animScript.Shoot();
