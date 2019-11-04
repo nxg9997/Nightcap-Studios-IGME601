@@ -176,8 +176,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 1
-  cameraDistance: 20
-  cameraHeight: 10
+  cameraDistance: 22
+  cameraHeight: 20
   mouseSensitivity: 4
   orbitDampening: 10
   scrollDampening: 6
@@ -298,9 +298,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 1
   head: {fileID: 2066530691296663018}
-  speed: 1000
+  speed: 500
   rotationSpeed: 150
-  jumpSpeed: 20
+  jumpSpeed: 10
   gravityForce: 10
   canMove: 1
 --- !u!114 &2066530691247582554
@@ -330,6 +330,7 @@ MonoBehaviour:
   UIColor_Fire: {r: 1, g: 0.25838426, b: 0.24528301, a: 1}
   UIColor_Ice: {r: 0, g: 0.6313726, b: 1, a: 1}
   UIColor_Lightning: {r: 0.9528302, g: 0.91999876, b: 0, a: 1}
+  aimDistance: 10
 --- !u!114 &2066530691247582553
 MonoBehaviour:
   m_ObjectHideFlags: 0
