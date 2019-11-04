@@ -34,10 +34,23 @@ public class Spells : MonoBehaviour
     // Player Data Script
     private PlayerData pData;
 
+    // Other
+    private GameObject spellOrigin;
+
     // Start is called before the first frame update
     void Start()
     {
         pData = GetComponent<PlayerData>();
+
+        Transform[] trans = GetComponentsInChildren<Transform>();
+        foreach(Transform t in trans)
+        {
+            if(t.gameObject.name == "SpellOrigin")
+            {
+                spellOrigin = t.gameObject;
+                break;
+            }
+        }
 
         // Setting the spell charge time variables
         fireTime = fireDelayTime;
@@ -117,12 +130,12 @@ public class Spells : MonoBehaviour
     /// </summary>
     void Fire()
     {
-        GameObject fireball = GameObject.Instantiate(fireProj, transform.position + transform.forward * 2, Quaternion.identity);
+        GameObject fireball = GameObject.Instantiate(fireProj, spellOrigin.transform.position + spellOrigin.transform.forward * 2, Quaternion.identity);
         fireball.GetComponent<SpellData>().origin = gameObject;
         Transform[] trans = gameObject.GetComponentsInChildren<Transform>();
         foreach(Transform t in trans)
         {
-            if(t.gameObject.name == "Head")
+            if(t.gameObject.name == "HatLocation")
             {
                 fireball.transform.forward = t.forward;//gameObject.GetComponentInChildren<Camera>().transform.forward;
                 break;
@@ -143,8 +156,9 @@ public class Spells : MonoBehaviour
         Vector3 start = Vector3.zero;
         Vector3 end = Vector3.zero;
 
+        Transform[] trans2 = GetComponentsInChildren<Transform>();
         Transform hatTrans = transform;
-        foreach (Transform t in trans)
+        foreach (Transform t in trans2)
         {
             if(t.gameObject.name == "HatLocation")
             {
@@ -153,11 +167,11 @@ public class Spells : MonoBehaviour
             }
         }
 
-            foreach (Transform t in trans)
+        foreach (Transform t in trans)
         {
             if (t.gameObject.name.Contains("Start"))
             {
-                t.position = transform.position + transform.forward * 2;
+                t.position = spellOrigin.transform.position + transform.forward * 2;
                 start = t.position;
             }
             else if (t.gameObject.name.Contains("End"))

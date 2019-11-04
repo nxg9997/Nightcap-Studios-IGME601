@@ -142,7 +142,7 @@ public class PlayerData : MonoBehaviour
         if(health <= 0)
         {
             dead = true;
-            GetComponent<MeshRenderer>().enabled = false;
+            GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
         }
     }
 
@@ -156,7 +156,7 @@ public class PlayerData : MonoBehaviour
         if(spawnTimer > spawnTime)
         {
             dead = false;
-            GetComponent<MeshRenderer>().enabled = true;
+            GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
             //transform.position = spawn.transform.position;
             health = maxHealth;
             spawnTimer = 0;
