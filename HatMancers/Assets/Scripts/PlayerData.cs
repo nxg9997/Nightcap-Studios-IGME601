@@ -24,6 +24,9 @@ public class PlayerData : MonoBehaviour
     public float killPlaneDepth = -50;
 
     public GameObject opponent;
+    public PlayerData opponentData;
+    private int score;
+
     public bool testDummy = false;
 
     private PlayerController pCtrl;
@@ -74,6 +77,12 @@ public class PlayerData : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 health = 0;
+            }
+
+            // Allow devs to decrease player health with F2 while in debug mode
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                health -= Mathf.RoundToInt((maxHealth * 0.05f));
             }
         }
 
@@ -142,6 +151,7 @@ public class PlayerData : MonoBehaviour
         if(health <= 0)
         {
             dead = true;
+            opponentData.IncrementScore();
             GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
         }
     }
@@ -194,5 +204,21 @@ public class PlayerData : MonoBehaviour
                 health -= col.gameObject.GetComponent<SpellData>().damage;
             //Debug.Log(health);
         }
+    }
+
+    /// <summary>
+    /// Returns the Score of the player.
+    /// </summary>
+    public int GetScore()
+    {
+        return score;
+    }
+
+    /// <summary>
+    /// Adds 1 to the Player's score.
+    /// </summary>
+    public void IncrementScore()
+    {
+        score++;
     }
 }

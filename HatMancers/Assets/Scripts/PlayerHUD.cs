@@ -15,6 +15,7 @@ public class PlayerHUD : MonoBehaviour
     public Image hpFill;
     public Slider spellSlider;
     public Image spellFill;
+    public Text scoreText;
 
     // Private Attributes
     private int lastHealth;
@@ -26,6 +27,12 @@ public class PlayerHUD : MonoBehaviour
     {
         // Setting the private attributes
         lastHealth = playerData.health;
+
+        // Changing the default HP Fill color
+        hpFill.color = Color.HSVToRGB(((lastHealth * 1f) / playerData.maxHealth) / 2.55f, 1, 1);
+
+        // Changing the default Score text
+        scoreText.text = playerData.GetScore().ToString();
     }
 
     /// <summary>
@@ -38,15 +45,18 @@ public class PlayerHUD : MonoBehaviour
         {
             // Setting the last health value to be the current health
             lastHealth = playerData.health;
-            float healthPercent = ((1f * lastHealth) / playerData.maxHealth);
-
+            float healthPercent = ((lastHealth * 1f) / playerData.maxHealth);
+            
             // Updating the HP Slider
             hpSlider.value = healthPercent;
-            hpFill.color = Color.HSVToRGB(healthPercent / 2.55f, 1f, 1f);
+            hpFill.color = Color.HSVToRGB(healthPercent / 2.55f, 1, 1);
         }
 
         // Updating the Spell Slider + spell fill color
         spellSlider.value = playerSpells.SpellChargePercent();
         spellFill.color = playerSpells.SpellColorUI();
+
+        // Updating the Score
+        scoreText.text = playerData.GetScore().ToString();
     }
 }

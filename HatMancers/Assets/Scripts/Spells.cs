@@ -219,7 +219,7 @@ public class Spells : MonoBehaviour
     public float SpellChargePercent()
     {
         // Defining the result value
-        float result = 0f;
+        float result = 0;
 
         // SWITCH for the current magic...
         switch (pData.currMagic)
@@ -232,7 +232,7 @@ public class Spells : MonoBehaviour
                 break;
             case "none":
             case "ice":
-                result = 1f;
+                result = 1;
                 break;
             // (Undefined Magic)
             default:
@@ -241,7 +241,7 @@ public class Spells : MonoBehaviour
         }
 
         // Clamping the result
-        Mathf.Clamp(result, 0f, 1f);
+        result = Mathf.Clamp(result, 0, 1);
 
         // Returning the result
         return result;
@@ -253,7 +253,7 @@ public class Spells : MonoBehaviour
     public Color SpellColorUI()
     {
         // Defining the result color
-        Color result = new Color(255, 255, 255);
+        Color result = new Color(255, 255, 255, 1);
 
         // SWITCH for the current magic...
         switch (pData.currMagic)
