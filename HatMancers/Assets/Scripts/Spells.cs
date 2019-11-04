@@ -176,7 +176,7 @@ public class Spells : MonoBehaviour
         currBolt = bolt;
 
         RaycastHit rch;
-        bool hit = Physics.Raycast(start, end, out rch, lightningDist);
+        bool hit = Physics.Raycast(start, hatTrans.transform.forward, out rch, lightningDist);
         if(hit)
         {
             Debug.Log("hit object " + rch.collider.gameObject.name);
