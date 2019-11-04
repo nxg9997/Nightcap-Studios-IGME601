@@ -187,6 +187,7 @@ public class PlayerData : MonoBehaviour
             currHat = col.gameObject;
             currHat.GetComponent<Collider>().enabled = false;
             UpdateMagic();
+            GameObject.Find("Manager").GetComponent<HatSpawner>().unclaimedHatCount--;
         }
         else if(col.gameObject.tag == "Damage") // Damages the player if they are hit by a damaging source (denoted by the "Damage" tag)
         {

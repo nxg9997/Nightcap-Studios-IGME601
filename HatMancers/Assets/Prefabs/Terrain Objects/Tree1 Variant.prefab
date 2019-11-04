@@ -11,8 +11,21 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.9614767, y: 0.76724243, z: 1.0898848}
+  m_Center: {x: -0.0064188642, y: 1.8792522, z: -0.115565106}
+--- !u!65 &4415915247341307971
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3334546438347176740}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.24883024, y: 1.5136211, z: 0.26167297}
+  m_Center: {x: -0.0032144785, y: 0.738327, z: -0.09951528}
 --- !u!1001 &6730450731523203629
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20,11 +33,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 92f86a18038395249879356a24e31207,
-        type: 3}
-      propertyPath: m_Name
-      value: Tree1 Variant
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 92f86a18038395249879356a24e31207,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -94,6 +102,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 92f86a18038395249879356a24e31207,
+        type: 3}
+      propertyPath: m_Name
+      value: Tree1 Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92f86a18038395249879356a24e31207, type: 3}
