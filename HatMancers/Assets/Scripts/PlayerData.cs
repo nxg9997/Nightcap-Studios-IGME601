@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Contains all the Player gameplay data
+/// Authors: Nate, David, Michael
+/// </summary>
 public class PlayerData : MonoBehaviour
 {
     // Contains data about the player's current hat/magic, spawn information, etc.
@@ -10,6 +13,7 @@ public class PlayerData : MonoBehaviour
 
     public string currMagic = "none";
 
+    public int maxHealth = 100;
     public int health = 100;
 
     public GameObject spawn;
@@ -20,6 +24,9 @@ public class PlayerData : MonoBehaviour
     public float killPlaneDepth = -50;
 
     public GameObject opponent;
+    public PlayerData opponentData;
+    private int score;
+
     public bool testDummy = false;
 
     private PlayerController pCtrl;
@@ -70,6 +77,12 @@ public class PlayerData : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 health = 0;
+            }
+
+            // Allow devs to decrease player health with F2 while in debug mode
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                health -= Mathf.RoundToInt((maxHealth * 0.05f));
             }
         }
 
@@ -138,6 +151,7 @@ public class PlayerData : MonoBehaviour
         if(health <= 0)
         {
             dead = true;
+            opponentData.IncrementScore();
             GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
         }
     }
@@ -154,7 +168,7 @@ public class PlayerData : MonoBehaviour
             dead = false;
             GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
             //transform.position = spawn.transform.position;
-            health = 100;
+            health = maxHealth;
             spawnTimer = 0;
 
             transform.position = GameObject.Find("Manager").GetComponent<RespawnManager>().FindSpawnPoint(opponent);
@@ -191,5 +205,21 @@ public class PlayerData : MonoBehaviour
                 health -= col.gameObject.GetComponent<SpellData>().damage;
             //Debug.Log(health);
         }
+    }
+
+    /// <summary>
+    /// Returns the Score of the player.
+    /// </summary>
+    public int GetScore()
+    {
+        return score;
+    }
+
+    /// <summary>
+    /// Adds 1 to the Player's score.
+    /// </summary>
+    public void IncrementScore()
+    {
+        score++;
     }
 }
