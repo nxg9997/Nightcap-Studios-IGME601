@@ -35,6 +35,9 @@ public class PlayerData : MonoBehaviour
     [SerializeField]
     private GameObject hatPosition;
 
+    public RectTransform fireCrosshair;
+    public RectTransform lightningCrosshair;
+
     public bool debug = false;
 
     // Start is called before the first frame update
@@ -125,10 +128,16 @@ public class PlayerData : MonoBehaviour
         if(currHat.tag == "FireHat")
         {
             currMagic = "fire";
+
+            // Check for crosshairs
+            fireCrosshair.gameObject.SetActive(true);
         }
         else if (currHat.tag == "LightningHat")
         {
             currMagic = "lightning";
+
+            // Check for crosshairs
+            lightningCrosshair.gameObject.SetActive(true);
         }
         else if (currHat.tag == "IceHat")
         {
@@ -186,10 +195,15 @@ public class PlayerData : MonoBehaviour
             if(currHat != null)
             {
                 Destroy(currHat);
+
+                // Deactivate crosshairs
+                fireCrosshair.gameObject.SetActive(false);
+                lightningCrosshair.gameObject.SetActive(false);
             }
             currHat = col.gameObject;
             currHat.GetComponent<Collider>().enabled = false;
             UpdateMagic();
+
             GameObject.Find("Manager").GetComponent<HatSpawner>().unclaimedHatCount--;
         }
         else if(col.gameObject.tag == "Damage") // Damages the player if they are hit by a damaging source (denoted by the "Damage" tag)

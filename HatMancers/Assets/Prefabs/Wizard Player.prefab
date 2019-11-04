@@ -318,7 +318,7 @@ MonoBehaviour:
   playerNum: 1
   fireProj: {fileID: 1863901900203383255, guid: d33073ec7df17964384db75aaf8e2148,
     type: 3}
-  fireForce: 500
+  fireForce: 2000
   fireDelayTime: 0.5
   lightningObj: {fileID: 7279632303630109400, guid: 9531fb4f59b8cde469fa52b2aa565356,
     type: 3}
@@ -330,7 +330,6 @@ MonoBehaviour:
   UIColor_Fire: {r: 1, g: 0.25838426, b: 0.24528301, a: 1}
   UIColor_Ice: {r: 0, g: 0.6313726, b: 1, a: 1}
   UIColor_Lightning: {r: 0.9528302, g: 0.91999876, b: 0, a: 1}
-  aimDistance: 10
 --- !u!114 &2066530691247582553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,6 +353,7 @@ MonoBehaviour:
   opponent: {fileID: 0}
   opponentData: {fileID: 0}
   testDummy: 0
+  hatPosition: {fileID: 0}
   debug: 0
 --- !u!1 &2066530691296663019
 GameObject:
