@@ -95,6 +95,12 @@ public class PlayerController : MonoBehaviour
             // Play the running animation
             animScript.Run();
         }
+
+        if (animScript.IsIdling() && (Input.GetAxis("LT1") || Input.GetAxis("RT1")))
+        {
+            // Play the shooting animation
+            animScript.Shoot();
+        }
     }
 
     // Check for when a collider hits this game object
