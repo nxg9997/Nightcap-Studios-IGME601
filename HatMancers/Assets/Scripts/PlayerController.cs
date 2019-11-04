@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
         */
 
         // IF the player is grounded & the player is NOT moving...
-        if (grounded && vertical == 0f && horizontal == 0f)
+        if (grounded && vertical == 0 && horizontal == 0)
         {
             // Playing the idle animation
             animScript.Idle();

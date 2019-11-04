@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Contains all the Player gameplay data
+/// Authors: Nate, David, Michael
+/// </summary>
 public class PlayerData : MonoBehaviour
 {
     // Contains data about the player's current hat/magic, spawn information, etc.
@@ -10,6 +13,7 @@ public class PlayerData : MonoBehaviour
 
     public string currMagic = "none";
 
+    public int maxHealth = 100;
     public int health = 100;
 
     public GameObject spawn;
@@ -20,10 +24,15 @@ public class PlayerData : MonoBehaviour
     public float killPlaneDepth = -50;
 
     public GameObject opponent;
+    public PlayerData opponentData;
+    private int score;
+
     public bool testDummy = false;
 
     private PlayerController pCtrl;
     private CapsuleCollider cCollider;
+
+    [SerializeField]
     private GameObject hatPosition;
 
     public bool debug = false;
@@ -41,7 +50,7 @@ public class PlayerData : MonoBehaviour
         pCtrl = GetComponent<PlayerController>();
         cCollider = GetComponent<CapsuleCollider>();
 
-        if(pCtrl.playerNum == 1)
+        if(pCtrl.playerNum == 1 || pCtrl.playerNum == 3)
         {
             opponent = GameObject.Find("Player2");
         }
@@ -49,6 +58,7 @@ public class PlayerData : MonoBehaviour
         {
             opponent = GameObject.Find("Player1");
         }
+        opponentData = opponent.GetComponent<PlayerData>();
 
         Transform[] children = GetComponentsInChildren<Transform>();
         foreach(Transform g in children)
@@ -70,6 +80,12 @@ public class PlayerData : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 health = 0;
+            }
+
+            // Allow devs to decrease player health with F2 while in debug mode
+            if (Input.GetKeyDown(KeyCode.F2))
+            {
+                health -= Mathf.RoundToInt((maxHealth * 0.05f));
             }
         }
 
@@ -138,7 +154,8 @@ public class PlayerData : MonoBehaviour
         if(health <= 0)
         {
             dead = true;
-            GetComponent<MeshRenderer>().enabled = false;
+            opponentData.IncrementScore();
+            GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
         }
     }
 
@@ -152,9 +169,9 @@ public class PlayerData : MonoBehaviour
         if(spawnTimer > spawnTime)
         {
             dead = false;
-            GetComponent<MeshRenderer>().enabled = true;
+            GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
             //transform.position = spawn.transform.position;
-            health = 100;
+            health = maxHealth;
             spawnTimer = 0;
 
             transform.position = GameObject.Find("Manager").GetComponent<RespawnManager>().FindSpawnPoint(opponent);
@@ -173,6 +190,7 @@ public class PlayerData : MonoBehaviour
             currHat = col.gameObject;
             currHat.GetComponent<Collider>().enabled = false;
             UpdateMagic();
+            GameObject.Find("Manager").GetComponent<HatSpawner>().unclaimedHatCount--;
         }
         else if(col.gameObject.tag == "Damage") // Damages the player if they are hit by a damaging source (denoted by the "Damage" tag)
         {
@@ -190,5 +208,21 @@ public class PlayerData : MonoBehaviour
                 health -= col.gameObject.GetComponent<SpellData>().damage;
             //Debug.Log(health);
         }
+    }
+
+    /// <summary>
+    /// Returns the Score of the player.
+    /// </summary>
+    public int GetScore()
+    {
+        return score;
+    }
+
+    /// <summary>
+    /// Adds 1 to the Player's score.
+    /// </summary>
+    public void IncrementScore()
+    {
+        score++;
     }
 }

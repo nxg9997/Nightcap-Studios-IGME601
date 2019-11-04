@@ -26,13 +26,40 @@ public class Spells : MonoBehaviour
     public GameObject iceObj;
     private GameObject currIce;
 
+    // UI Color
+    public Color UIColor_Fire;
+    public Color UIColor_Ice;
+    public Color UIColor_Lightning;
+
     // Player Data Script
     private PlayerData pData;
+
+    // Other
+    private GameObject spellOrigin;
+    private Camera cam;
 
     // Start is called before the first frame update
     void Start()
     {
         pData = GetComponent<PlayerData>();
+
+        Transform[] trans = GetComponentsInChildren<Transform>();
+        foreach(Transform t in trans)
+        {
+            if(t.gameObject.name == "SpellOrigin")
+            {
+                spellOrigin = t.gameObject;
+            }
+
+            else if(t.gameObject.name == "Main Camera")
+            {
+                cam = t.gameObject.GetComponent<Camera>();
+            }
+        }
+
+        // Setting the spell charge time variables
+        fireTime = fireDelayTime;
+        lightningTime = lightningDelayTime;
     }
 
     // Update is called once per frame
@@ -108,18 +135,21 @@ public class Spells : MonoBehaviour
     /// </summary>
     void Fire()
     {
-        GameObject fireball = GameObject.Instantiate(fireProj, transform.position + transform.forward * 2, Quaternion.identity);
+        // Create fireball and set its rotation
+        GameObject fireball = GameObject.Instantiate(fireProj, spellOrigin.transform.position + spellOrigin.transform.forward * 2, Quaternion.identity);
         fireball.GetComponent<SpellData>().origin = gameObject;
-        Transform[] trans = gameObject.GetComponentsInChildren<Transform>();
+        fireball.transform.forward = cam.transform.forward;
+        /*Transform[] trans = gameObject.GetComponentsInChildren<Transform>();
         foreach(Transform t in trans)
         {
-            if(t.gameObject.name == "Head")
+            if(t.gameObject.name == "HatLocation")
             {
                 fireball.transform.forward = t.forward;//gameObject.GetComponentInChildren<Camera>().transform.forward;
                 break;
             }
-        }
+        }*/
         
+        // Shoot fireball
         fireball.GetComponent<Rigidbody>().AddForce(fireball.transform.forward * fireForce);
     }
 
@@ -134,26 +164,27 @@ public class Spells : MonoBehaviour
         Vector3 start = Vector3.zero;
         Vector3 end = Vector3.zero;
 
-        Transform hatTrans = transform;
-        foreach (Transform t in trans)
+        Transform[] trans2 = GetComponentsInChildren<Transform>();
+        /*Transform hatTrans = transform;
+        foreach (Transform t in trans2)
         {
             if(t.gameObject.name == "HatLocation")
             {
                 hatTrans = t;
                 break;
             }
-        }
+        }*/
 
-            foreach (Transform t in trans)
+        foreach (Transform t in trans)
         {
             if (t.gameObject.name.Contains("Start"))
             {
-                t.position = transform.position + transform.forward * 2;
+                t.position = spellOrigin.transform.position + transform.forward * 2;
                 start = t.position;
             }
             else if (t.gameObject.name.Contains("End"))
             {
-                t.position = hatTrans.transform.position + hatTrans.transform.forward * lightningDist;
+                t.position = spellOrigin.transform.position + (cam.transform.forward * lightningDist);
                 end = t.position;
             }
         }
@@ -162,10 +193,10 @@ public class Spells : MonoBehaviour
         currBolt = bolt;
 
         RaycastHit rch;
-        bool hit = Physics.Raycast(start, end, out rch, lightningDist);
+        bool hit = Physics.Raycast(start, cam.transform.forward, out rch, lightningDist);
         if(hit)
         {
-            //Debug.Log("hit object");
+            Debug.Log("hit object " + rch.collider.gameObject.name);
             if (rch.collider.gameObject.name.Contains("Player"))
             {
                 rch.collider.gameObject.GetComponent<PlayerData>().health -= bolt.GetComponent<SpellData>().damage;
@@ -188,5 +219,70 @@ public class Spells : MonoBehaviour
             currIce.transform.position = transform.position + transform.forward * 1.5f;
             currIce.transform.rotation = transform.rotation;
         }
+    }
+
+    /// <summary>
+    /// Returns the charge percent of the current spell. (1.0 = ready, 0.0 = full charge needed)
+    /// </summary>
+    public float SpellChargePercent()
+    {
+        // Defining the result value
+        float result = 0;
+
+        // SWITCH for the current magic...
+        switch (pData.currMagic)
+        {
+            case "fire":
+                result = (fireTime / fireDelayTime);
+                break;
+            case "lightning":
+                result = (lightningTime / lightningDelayTime);
+                break;
+            case "none":
+            case "ice":
+                result = 1;
+                break;
+            // (Undefined Magic)
+            default:
+                Debug.LogError("You have not defined the \"" + pData.currMagic + "\" case in SpellChargePercent()!");
+                break;
+        }
+
+        // Clamping the result
+        result = Mathf.Clamp(result, 0, 1);
+
+        // Returning the result
+        return result;
+    }
+
+    /// <summary>
+    /// Returns the UI color of the spell.
+    /// </summary>
+    public Color SpellColorUI()
+    {
+        // Defining the result color
+        Color result = new Color(255, 255, 255, 1);
+
+        // SWITCH for the current magic...
+        switch (pData.currMagic)
+        {
+            case "none":
+                break;
+            case "fire":
+                result = UIColor_Fire;
+                break;
+            case "lightning":
+                result = UIColor_Lightning;
+                break;
+            case "ice":
+                result = UIColor_Ice;
+                break;
+            default:
+                Debug.LogError("You have not defined the \"" + pData.currMagic + "\" case in SpellColorUI()!");
+                break;
+        }
+
+        // Returning the result color
+        return result;
     }
 }
