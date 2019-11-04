@@ -56,6 +56,7 @@ public class PlayerData : MonoBehaviour
         {
             opponent = GameObject.Find("Player1");
         }
+        opponentData = opponent.GetComponent<PlayerData>();
 
         Transform[] children = GetComponentsInChildren<Transform>();
         foreach(Transform g in children)
