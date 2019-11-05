@@ -23,5 +23,6 @@ public class StartBtn : MonoBehaviour
     {
         //Debug.Log("testing");
         SceneManager.LoadScene(1);
+        Cursor.visible = false;
     }
 }
