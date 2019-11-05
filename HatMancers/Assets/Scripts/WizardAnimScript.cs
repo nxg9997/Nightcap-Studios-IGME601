@@ -19,7 +19,8 @@ public class WizardAnimScript : MonoBehaviour
     private enum AnimState
     {
         Idle,
-        Running
+        Running,
+        Shooting
     };
 
     /// <summary>
@@ -58,6 +59,7 @@ public class WizardAnimScript : MonoBehaviour
         // Setting every animation boolean to false
         anim.SetBool("isIdle", false);
         anim.SetBool("isRunning", false);
+        anim.SetBool("isShooting", false);
 
         // SWITCH for every animation state
         switch (state)
@@ -67,6 +69,9 @@ public class WizardAnimScript : MonoBehaviour
                 break;
             case AnimState.Running:
                 anim.SetBool("isRunning", true);
+                break;
+            case AnimState.Shooting:
+                anim.SetBool("isShooting", true);
                 break;
             default:
                 Debug.LogError("Case for selected AnimState enum has not been defined!");
@@ -116,6 +121,24 @@ public class WizardAnimScript : MonoBehaviour
     public bool IsRunning()
     {
         return anim.GetBool("isRunning");
+    }
+
+    /// <summary>
+    /// </summary>
+    public void Shoot()
+    {
+        // IF the Wizard is not already shooting...
+        if (!anim.GetBool("isShooting"))
+        {
+            // Making the running animation play
+            anim.CrossFade("Shooting", 0.1f);
+            SetAnimBools(AnimState.Shooting);
+        }
+    }
+
+    public bool IsShooting()
+    {
+        return anim.GetBool("isShooting");
     }
 
     /// <summary>

@@ -31,6 +31,8 @@ public class PlayerData : MonoBehaviour
 
     private PlayerController pCtrl;
     private CapsuleCollider cCollider;
+
+    [SerializeField]
     private GameObject hatPosition;
 
     public bool debug = false;
@@ -48,7 +50,7 @@ public class PlayerData : MonoBehaviour
         pCtrl = GetComponent<PlayerController>();
         cCollider = GetComponent<CapsuleCollider>();
 
-        if(pCtrl.playerNum == 1)
+        if(pCtrl.playerNum == 1 || pCtrl.playerNum == 3)
         {
             opponent = GameObject.Find("Player2");
         }

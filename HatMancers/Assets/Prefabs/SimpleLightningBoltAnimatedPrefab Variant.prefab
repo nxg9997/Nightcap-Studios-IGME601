@@ -25,7 +25,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2966c992eff8d9a4381a105fb772b8e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 99
+  damage: 499
   origin: {fileID: 0}
 --- !u!1001 &7279632303630218180
 PrefabInstance:

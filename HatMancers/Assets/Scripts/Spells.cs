@@ -36,6 +36,7 @@ public class Spells : MonoBehaviour
 
     // Other
     private GameObject spellOrigin;
+    private Camera cam;
 
     // Start is called before the first frame update
     void Start()
@@ -48,7 +49,11 @@ public class Spells : MonoBehaviour
             if(t.gameObject.name == "SpellOrigin")
             {
                 spellOrigin = t.gameObject;
-                break;
+            }
+
+            else if(t.gameObject.name == "Main Camera")
+            {
+                cam = t.gameObject.GetComponent<Camera>();
             }
         }
 
@@ -130,9 +135,11 @@ public class Spells : MonoBehaviour
     /// </summary>
     void Fire()
     {
+        // Create fireball and set its rotation
         GameObject fireball = GameObject.Instantiate(fireProj, spellOrigin.transform.position + spellOrigin.transform.forward * 2, Quaternion.identity);
         fireball.GetComponent<SpellData>().origin = gameObject;
-        Transform[] trans = gameObject.GetComponentsInChildren<Transform>();
+        fireball.transform.forward = cam.transform.forward;
+        /*Transform[] trans = gameObject.GetComponentsInChildren<Transform>();
         foreach(Transform t in trans)
         {
             if(t.gameObject.name == "HatLocation")
@@ -140,8 +147,9 @@ public class Spells : MonoBehaviour
                 fireball.transform.forward = t.forward;//gameObject.GetComponentInChildren<Camera>().transform.forward;
                 break;
             }
-        }
+        }*/
         
+        // Shoot fireball
         fireball.GetComponent<Rigidbody>().AddForce(fireball.transform.forward * fireForce);
     }
 
@@ -157,7 +165,7 @@ public class Spells : MonoBehaviour
         Vector3 end = Vector3.zero;
 
         Transform[] trans2 = GetComponentsInChildren<Transform>();
-        Transform hatTrans = transform;
+        /*Transform hatTrans = transform;
         foreach (Transform t in trans2)
         {
             if(t.gameObject.name == "HatLocation")
@@ -165,7 +173,7 @@ public class Spells : MonoBehaviour
                 hatTrans = t;
                 break;
             }
-        }
+        }*/
 
         foreach (Transform t in trans)
         {
@@ -176,7 +184,7 @@ public class Spells : MonoBehaviour
             }
             else if (t.gameObject.name.Contains("End"))
             {
-                t.position = hatTrans.transform.position + hatTrans.transform.forward * lightningDist;
+                t.position = spellOrigin.transform.position + (cam.transform.forward * lightningDist);
                 end = t.position;
             }
         }
@@ -185,7 +193,7 @@ public class Spells : MonoBehaviour
         currBolt = bolt;
 
         RaycastHit rch;
-        bool hit = Physics.Raycast(start, hatTrans.transform.forward, out rch, lightningDist);
+        bool hit = Physics.Raycast(start, cam.transform.forward, out rch, lightningDist);
         if(hit)
         {
             Debug.Log("hit object " + rch.collider.gameObject.name);
