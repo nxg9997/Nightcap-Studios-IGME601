@@ -320,6 +320,7 @@ MonoBehaviour:
     type: 3}
   fireForce: 2000
   fireDelayTime: 0.5
+  fireOffset: {x: 0, y: 2, z: 0}
   lightningObj: {fileID: 7279632303630109400, guid: 9531fb4f59b8cde469fa52b2aa565356,
     type: 3}
   lightningDelayTime: 2
@@ -354,6 +355,8 @@ MonoBehaviour:
   opponentData: {fileID: 0}
   testDummy: 0
   hatPosition: {fileID: 0}
+  fireCrosshair: {fileID: 0}
+  lightningCrosshair: {fileID: 0}
   debug: 0
 --- !u!1 &2066530691296663019
 GameObject:

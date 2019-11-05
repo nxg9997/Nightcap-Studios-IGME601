@@ -11,6 +11,7 @@ public class Spells : MonoBehaviour
     private bool fireDelay = false;
     private float fireTime = 0.0f;
     public float fireDelayTime = 2;
+    public Vector3 fireOffset;
 
     // Lightning Data
     public GameObject lightningObj;
@@ -136,7 +137,7 @@ public class Spells : MonoBehaviour
     void Fire()
     {
         // Create fireball and set its rotation
-        GameObject fireball = GameObject.Instantiate(fireProj, spellOrigin.transform.position + spellOrigin.transform.forward * 2, Quaternion.identity);
+        GameObject fireball = GameObject.Instantiate(fireProj, spellOrigin.transform.position + fireOffset + spellOrigin.transform.forward * 2, Quaternion.identity);
         fireball.GetComponent<SpellData>().origin = gameObject;
         fireball.transform.forward = cam.transform.forward;
         /*Transform[] trans = gameObject.GetComponentsInChildren<Transform>();
