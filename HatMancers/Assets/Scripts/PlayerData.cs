@@ -25,7 +25,7 @@ public class PlayerData : MonoBehaviour
 
     public GameObject opponent;
     public PlayerData opponentData;
-    private int score;
+    public int score;
 
     public bool testDummy = false;
 
