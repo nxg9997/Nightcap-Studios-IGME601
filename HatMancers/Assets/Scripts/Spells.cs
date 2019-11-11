@@ -164,6 +164,7 @@ public class Spells : MonoBehaviour
         Transform[] trans = bolt.GetComponentsInChildren<Transform>();
         Vector3 start = Vector3.zero;
         Vector3 end = Vector3.zero;
+        RaycastHit rch;
 
         Transform[] trans2 = GetComponentsInChildren<Transform>();
         /*Transform hatTrans = transform;
@@ -185,16 +186,23 @@ public class Spells : MonoBehaviour
             }
             else if (t.gameObject.name.Contains("End"))
             {
-                t.position = spellOrigin.transform.position + (cam.transform.forward * lightningDist);
-                end = t.position;
+                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out rch))
+                {
+                    t.position = rch.point;
+                    end = t.position;
+                }
+                else
+                {
+                    t.position = spellOrigin.transform.position + (cam.transform.forward * lightningDist);
+                    end = t.position;
+                }
             }
         }
         lightningPersistTimer = 0;
         lightningTime = 0;
         currBolt = bolt;
 
-        RaycastHit rch;
-        bool hit = Physics.Raycast(start, cam.transform.forward, out rch, lightningDist);
+        bool hit = Physics.Raycast(cam.transform.position, cam.transform.forward, out rch, lightningDist);
         if(hit)
         {
             Debug.Log("hit object " + rch.collider.gameObject.name);
