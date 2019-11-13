@@ -36,7 +36,6 @@ public class Spells : MonoBehaviour
     private PlayerData pData;
 
     // Other
-    private int playerNum;
     private GameObject spellOrigin;
     private Camera cam;
 
@@ -63,9 +62,6 @@ public class Spells : MonoBehaviour
         // Setting the spell charge time variables
         fireTime = fireDelayTime;
         lightningTime = lightningDelayTime;
-
-        // Getting the player number
-        playerNum = pController.GetPlayerNum();
     }
 
     // Update is called once per frame
@@ -83,19 +79,19 @@ public class Spells : MonoBehaviour
     /// </summary>
     void CheckInput()
     {
-        if ((Input.GetAxis("LT" + playerNum) > 0 || Input.GetAxis("RT" + playerNum) > 0) && !fireDelay && pData.currMagic == "fire")
+        if ((Input.GetAxis("LT" + PlayerNum()) > 0 || Input.GetAxis("RT" + PlayerNum()) > 0) && !fireDelay && pData.currMagic == "fire")
         {
             Fire();
             fireDelay = true;
             fireTime = 0;
         }
-        else if ((Input.GetAxis("LT" + playerNum) > 0 || Input.GetAxis("RT" + playerNum) > 0) && !lightningDelay && pData.currMagic == "lightning")
+        else if ((Input.GetAxis("LT" + PlayerNum()) > 0 || Input.GetAxis("RT" + PlayerNum()) > 0) && !lightningDelay && pData.currMagic == "lightning")
         {
             Lightning();
             lightningDelay = true;
             lightningTime = 0;
         }
-        else if ((Input.GetAxis("LT" + playerNum) > 0 || Input.GetAxis("RT" + playerNum) > 0) && pData.currMagic == "ice")
+        else if ((Input.GetAxis("LT" + PlayerNum()) > 0 || Input.GetAxis("RT" + PlayerNum()) > 0) && pData.currMagic == "ice")
         {
             Ice();
         }
@@ -290,5 +286,13 @@ public class Spells : MonoBehaviour
 
         // Returning the result color
         return result;
+    }
+
+    /// <summary>
+    /// Helper function that just retrives the current PlayerNum value.
+    /// </summary>
+    private int PlayerNum()
+    {
+        return pController.playerNum;
     }
 }
