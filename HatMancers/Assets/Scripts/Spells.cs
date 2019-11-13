@@ -5,7 +5,6 @@ using UnityEngine;
 public class Spells : MonoBehaviour
 {
     // Fire Data
-    public int playerNum;
     public GameObject fireProj;
     public float fireForce = 5.0f;
     private bool fireDelay = false;
@@ -32,16 +31,19 @@ public class Spells : MonoBehaviour
     public Color UIColor_Ice;
     public Color UIColor_Lightning;
 
-    // Player Data Script
+    // Player Scripts
+    private PlayerController pController;
     private PlayerData pData;
 
     // Other
+    private int playerNum;
     private GameObject spellOrigin;
     private Camera cam;
 
     // Start is called before the first frame update
     void Start()
     {
+        pController = GetComponent<PlayerController>();
         pData = GetComponent<PlayerData>();
 
         Transform[] trans = GetComponentsInChildren<Transform>();
@@ -61,6 +63,9 @@ public class Spells : MonoBehaviour
         // Setting the spell charge time variables
         fireTime = fireDelayTime;
         lightningTime = lightningDelayTime;
+
+        // Getting the player number
+        playerNum = pController.GetPlayerNum();
     }
 
     // Update is called once per frame
