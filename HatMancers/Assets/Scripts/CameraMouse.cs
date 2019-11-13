@@ -2,12 +2,13 @@
 using System.Collections;
 /// <summary>
 /// Controls the rotation of the camera in relation to the mouse.
-/// Authors: Abhi, David
+/// Authors: Abhi, David, Michael
 /// Source: https://www.youtube.com/watch?v=bVo0YLLO43s
 /// </summary>
 public class CameraMouse : MonoBehaviour
 {
-    public int playerNum;
+    // Modifiable Attributes
+    public PlayerController pController;
     public float cameraDistance = 10f;
     public float cameraHeight = 5f;
     public float mouseSensitivity = 4f;
@@ -17,12 +18,16 @@ public class CameraMouse : MonoBehaviour
     public float yClampMin = 30.0f;
     public float yClampMax = 90.0f;
     public Vector3 localRotation;
-
     public bool cameraDisabled = false;
 
+    // Private PlayerNum Property (used for input)
+    private int playerNum;
+
+    // Private Camera Transforms
     private Transform cam;
     private Transform pivot;
 
+    // Private Flags
     private bool isLocked;
 
     // Use this for initialization
@@ -32,6 +37,8 @@ public class CameraMouse : MonoBehaviour
         pivot = transform.parent;
 
         LockCursor(true);
+
+        playerNum = pController.GetPlayerNum();
     }
 
 
