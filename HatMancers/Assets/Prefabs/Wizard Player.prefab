@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5beb83cd5deafa438fb75026146f683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNum: 1
+  pController: {fileID: 2066530691247582555}
   cameraDistance: 22
   cameraHeight: 20
   mouseSensitivity: 4
@@ -315,7 +315,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a76fdafaad69404bac3ddefaa541a51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNum: 1
   fireProj: {fileID: 1863901900203383255, guid: d33073ec7df17964384db75aaf8e2148,
     type: 3}
   fireForce: 2000

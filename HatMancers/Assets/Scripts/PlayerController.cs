@@ -123,4 +123,12 @@ public class PlayerController : MonoBehaviour
             grounded = false;
         }
     }
+
+    /// <summary>
+    /// Gets the player number value.
+    /// </summary>
+    public int GetPlayerNum()
+    {
+        return playerNum;
+    }
 }
