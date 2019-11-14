@@ -26,6 +26,14 @@ public class Spells : MonoBehaviour
     public GameObject iceObj;
     private GameObject currIce;
 
+    // Bubble Data
+    public GameObject bubbleObj;
+    private GameObject[] currBubbles;
+    public float bubbleDelayTime = 0.25f;
+    public float bubbleTime = 0;
+    private bool bubbleDelay = false;
+    public float bubbleForce = 1.0f;
+
     // UI Color
     public Color UIColor_Fire;
     public Color UIColor_Ice;
@@ -95,6 +103,12 @@ public class Spells : MonoBehaviour
         {
             Ice();
         }
+        else if ((Input.GetAxis("LT" + PlayerNum()) > 0 || Input.GetAxis("RT" + PlayerNum()) > 0) && pData.currMagic == "bubbles" && !bubbleDelay)
+        {
+            Bubbles();
+            bubbleDelay = true;
+            bubbleTime = 0;
+        }
         else
         {
             if(pData.currMagic == "fire")
@@ -103,6 +117,14 @@ public class Spells : MonoBehaviour
                 if (fireTime > fireDelayTime)
                 {
                     fireDelay = false;
+                }
+            }
+            else if (pData.currMagic == "bubbles")
+            {
+                bubbleTime += Time.deltaTime;
+                if (bubbleTime > bubbleDelayTime)
+                {
+                    bubbleDelay = false;
                 }
             }
             else if (pData.currMagic == "lightning")
@@ -248,6 +270,9 @@ public class Spells : MonoBehaviour
             case "lightning":
                 result = (lightningTime / lightningDelayTime);
                 break;
+            case "bubbles":
+                result = (bubbleTime / bubbleDelayTime);
+                break;
             case "none":
             case "ice":
                 result = 1;
@@ -287,6 +312,9 @@ public class Spells : MonoBehaviour
             case "ice":
                 result = UIColor_Ice;
                 break;
+            case "bubbles":
+                result = UIColor_Ice;
+                break;
             default:
                 Debug.LogError("You have not defined the \"" + pData.currMagic + "\" case in SpellColorUI()!");
                 break;
@@ -294,6 +322,15 @@ public class Spells : MonoBehaviour
 
         // Returning the result color
         return result;
+    }
+
+
+    void Bubbles()
+    {
+        GameObject bubble = Instantiate(bubbleObj, spellOrigin.transform.position + spellOrigin.transform.forward * 2, Quaternion.identity);
+        bubble.GetComponent<SpellData>().origin = gameObject;
+        bubble.transform.forward = cam.transform.forward;
+        bubble.GetComponent<Rigidbody>().AddForce(bubble.transform.forward * bubbleForce);
     }
 
     /// <summary>

@@ -143,6 +143,10 @@ public class PlayerData : MonoBehaviour
         {
             currMagic = "ice";
         }
+        else if (currHat.tag == "BubbleHat")
+        {
+            currMagic = "bubbles";
+        }
     }
 
     /// <summary>
@@ -220,6 +224,19 @@ public class PlayerData : MonoBehaviour
         {
             if (col.gameObject.GetComponent<SpellData>().origin.name != gameObject.name)
                 health -= col.gameObject.GetComponent<SpellData>().damage;
+            //Debug.Log(health);
+        }
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Damage" && col.gameObject.name.Contains("Bubble")) // Damages the player if they are hit by a damaging source (denoted by the "Damage" tag)
+        {
+            if (col.gameObject.GetComponent<SpellData>().origin.name != gameObject.name)
+            {
+                health -= col.gameObject.GetComponent<SpellData>().damage;
+                Destroy(col.gameObject);
+            }
             //Debug.Log(health);
         }
     }
