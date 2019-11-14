@@ -34,6 +34,15 @@ public class Spells : MonoBehaviour
     private bool bubbleDelay = false;
     public float bubbleForce = 1.0f;
 
+    // Bear Data
+    public GameObject bearObj;
+    private GameObject currBear;
+    public float bearDelayTime = 1.0f;
+    public float bearTime = 0;
+    private bool bearDelay = false;
+    public float bearForce = 1.0f;
+    private float originalSpeed;
+
     // UI Color
     public Color UIColor_Fire;
     public Color UIColor_Ice;
@@ -70,6 +79,8 @@ public class Spells : MonoBehaviour
         // Setting the spell charge time variables
         fireTime = fireDelayTime;
         lightningTime = lightningDelayTime;
+
+        originalSpeed = GetComponent<PlayerController>().speed;
     }
 
     // Update is called once per frame
@@ -108,6 +119,12 @@ public class Spells : MonoBehaviour
             Bubbles();
             bubbleDelay = true;
             bubbleTime = 0;
+        }
+        else if ((Input.GetAxis("LT" + PlayerNum()) > 0 || Input.GetAxis("RT" + PlayerNum()) > 0) && pData.currMagic == "bear" && !bearDelay)
+        {
+            Bear();
+            bearDelay = true;
+            bearTime = 0;
         }
         else
         {
@@ -149,6 +166,21 @@ public class Spells : MonoBehaviour
             {
                 Destroy(currIce);
                 currIce = null;
+            }
+            else if (pData.currMagic == "bear")
+            {
+                if(currBear != null)
+                {
+                    currBear.transform.position = transform.position;
+                    currBear.transform.rotation = transform.rotation * Quaternion.AngleAxis(180, new Vector3(0, 1, 0));
+                }
+                bearTime += Time.deltaTime;
+                if (bearTime > bearDelayTime)
+                {
+                    bearDelay = false;
+                    Destroy(currBear);
+                    GetComponent<PlayerController>().speed = originalSpeed;
+                }
             }
 
         }
@@ -273,6 +305,9 @@ public class Spells : MonoBehaviour
             case "bubbles":
                 result = (bubbleTime / bubbleDelayTime);
                 break;
+            case "bear":
+                result = (bearTime / bearDelayTime);
+                break;
             case "none":
             case "ice":
                 result = 1;
@@ -315,6 +350,9 @@ public class Spells : MonoBehaviour
             case "bubbles":
                 result = UIColor_Ice;
                 break;
+            case "bear":
+                result = UIColor_Fire;
+                break;
             default:
                 Debug.LogError("You have not defined the \"" + pData.currMagic + "\" case in SpellColorUI()!");
                 break;
@@ -331,6 +369,16 @@ public class Spells : MonoBehaviour
         bubble.GetComponent<SpellData>().origin = gameObject;
         bubble.transform.forward = cam.transform.forward;
         bubble.GetComponent<Rigidbody>().AddForce(bubble.transform.forward * bubbleForce);
+    }
+
+    void Bear()
+    {
+        GameObject bear = Instantiate(bearObj, transform.position, transform.rotation * Quaternion.AngleAxis(180, new Vector3(0,1,0)));
+        bear.GetComponent<SpellData>().origin = gameObject;
+
+        gameObject.GetComponent<PlayerController>().speed = bearForce;
+
+        currBear = bear;
     }
 
     /// <summary>
