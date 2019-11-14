@@ -5,7 +5,6 @@ using UnityEngine;
 public class Spells : MonoBehaviour
 {
     // Fire Data
-    public int playerNum;
     public GameObject fireProj;
     public float fireForce = 5.0f;
     private bool fireDelay = false;
@@ -32,7 +31,8 @@ public class Spells : MonoBehaviour
     public Color UIColor_Ice;
     public Color UIColor_Lightning;
 
-    // Player Data Script
+    // Player Scripts
+    private PlayerController pController;
     private PlayerData pData;
 
     // Other
@@ -42,6 +42,7 @@ public class Spells : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pController = GetComponent<PlayerController>();
         pData = GetComponent<PlayerData>();
 
         Transform[] trans = GetComponentsInChildren<Transform>();
@@ -78,19 +79,19 @@ public class Spells : MonoBehaviour
     /// </summary>
     void CheckInput()
     {
-        if ((Input.GetAxis("LT" + playerNum) > 0 || Input.GetAxis("RT" + playerNum) > 0) && !fireDelay && pData.currMagic == "fire")
+        if ((Input.GetAxis("LT" + PlayerNum()) > 0 || Input.GetAxis("RT" + PlayerNum()) > 0) && !fireDelay && pData.currMagic == "fire")
         {
             Fire();
             fireDelay = true;
             fireTime = 0;
         }
-        else if ((Input.GetAxis("LT" + playerNum) > 0 || Input.GetAxis("RT" + playerNum) > 0) && !lightningDelay && pData.currMagic == "lightning")
+        else if ((Input.GetAxis("LT" + PlayerNum()) > 0 || Input.GetAxis("RT" + PlayerNum()) > 0) && !lightningDelay && pData.currMagic == "lightning")
         {
             Lightning();
             lightningDelay = true;
             lightningTime = 0;
         }
-        else if ((Input.GetAxis("LT" + playerNum) > 0 || Input.GetAxis("RT" + playerNum) > 0) && pData.currMagic == "ice")
+        else if ((Input.GetAxis("LT" + PlayerNum()) > 0 || Input.GetAxis("RT" + PlayerNum()) > 0) && pData.currMagic == "ice")
         {
             Ice();
         }
@@ -164,6 +165,7 @@ public class Spells : MonoBehaviour
         Transform[] trans = bolt.GetComponentsInChildren<Transform>();
         Vector3 start = Vector3.zero;
         Vector3 end = Vector3.zero;
+        RaycastHit rch;
 
         Transform[] trans2 = GetComponentsInChildren<Transform>();
         /*Transform hatTrans = transform;
@@ -185,16 +187,23 @@ public class Spells : MonoBehaviour
             }
             else if (t.gameObject.name.Contains("End"))
             {
-                t.position = spellOrigin.transform.position + (cam.transform.forward * lightningDist);
-                end = t.position;
+                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out rch))
+                {
+                    t.position = rch.point;
+                    end = t.position;
+                }
+                else
+                {
+                    t.position = spellOrigin.transform.position + (cam.transform.forward * lightningDist);
+                    end = t.position;
+                }
             }
         }
         lightningPersistTimer = 0;
         lightningTime = 0;
         currBolt = bolt;
 
-        RaycastHit rch;
-        bool hit = Physics.Raycast(start, cam.transform.forward, out rch, lightningDist);
+        bool hit = Physics.Raycast(cam.transform.position, cam.transform.forward, out rch, lightningDist);
         if(hit)
         {
             Debug.Log("hit object " + rch.collider.gameObject.name);
@@ -285,5 +294,13 @@ public class Spells : MonoBehaviour
 
         // Returning the result color
         return result;
+    }
+
+    /// <summary>
+    /// Helper function that just retrives the current PlayerNum value.
+    /// </summary>
+    private int PlayerNum()
+    {
+        return pController.playerNum;
     }
 }
