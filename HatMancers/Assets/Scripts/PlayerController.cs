@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float rotationSpeed;
     public float jumpSpeed; // Initial jump velocity
+    public float jumpHoldTime; // Time the button can be held down to add force into the air
     public float gravityForce; // Force of gravity weighing down in air
 
     // Rigidbody for physics
@@ -31,6 +32,9 @@ public class PlayerController : MonoBehaviour
     private float vertical;
     private float horizontal;
 
+    // Timers
+    private float jumpTimer;
+
     // Flags
     private bool grounded;
     public bool canMove = true;
@@ -38,6 +42,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        jumpTimer = 0;
         body = GetComponent<Rigidbody>();
         cameraMouse = head.gameObject.GetComponentInChildren<CameraMouse>();
         animScript = this.gameObject.GetComponentInChildren<WizardAnimScript>();
@@ -56,21 +61,44 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("A" + playerNum) > 0 && grounded)
         {
             // Set the vertical velocity immediately
-            Vector3 newVelocity = body.velocity;
-            newVelocity.y = jumpSpeed;
-            body.velocity = newVelocity;
+            //Vector3 newVelocity = body.velocity;
+            //newVelocity.y = jumpSpeed;
+            //body.velocity = newVelocity;
+            body.AddForce(Vector3.up * jumpSpeed, ForceMode.Force);
+            jumpTimer = 0;
+        }
+        else if (Input.GetAxis("A" + playerNum) != 0 && !grounded && jumpTimer < jumpHoldTime)
+        {
+            body.AddForce(Vector3.up * jumpSpeed, ForceMode.Force);
+            jumpTimer += Time.deltaTime;
         }
         else if (Input.GetAxis("A" + playerNum) == 0 && !grounded)
         {
             // Set counter force
-            body.AddForce(Vector3.down * gravityForce);
+            body.AddForce(Vector3.down * gravityForce, ForceMode.Force);
+        }
+        else if (!grounded)
+        {
+            body.AddForce(Vector3.down * (gravityForce / 2f), ForceMode.Force);
         }
 
-        // Create own gravity for rigidbody
-        Vector3 velocity = (transform.forward * vertical) * speed * Time.deltaTime;
-        velocity += (transform.right * horizontal) * speed * Time.deltaTime;
-        velocity.y = body.velocity.y;
-        body.velocity = velocity;
+        // Add more speed only if it hasn't reached max speed
+        if (body.velocity.x < speed)
+            body.AddForce(transform.forward * vertical * speed, ForceMode.Force);
+        if (body.velocity.z < speed)
+            body.AddForce(transform.right * horizontal * speed, ForceMode.Force);
+
+        // Deadzone for velocity
+        if (body.velocity.magnitude < 0.1)
+        {
+            body.velocity = Vector3.zero;
+            body.angularVelocity = Vector3.zero;
+        }
+
+        //Vector3 velocity = (transform.forward * vertical) * speed * Time.deltaTime;
+        //velocity += (transform.right * horizontal) * speed * Time.deltaTime;
+        //velocity.y = body.velocity.y;
+        //body.velocity += velocity;
 
         // Set horizontal rotation of the body to the horizontal rotation of the head
         transform.rotation = Quaternion.Euler(transform.rotation.y, cameraMouse.localRotation.x, 0f);
