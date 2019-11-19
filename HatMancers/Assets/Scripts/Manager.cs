@@ -8,7 +8,9 @@ public class Manager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        // TEST TEST TEST
+        Debug.Log("PlayerCount: " + PlayerPrefs.GetInt("PlayerCount"));
+        // TEST TEST TEST
     }
 
     // Update is called once per frame
