@@ -77,6 +77,10 @@ public class PlayerData : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If the game is paused, stop scene activities
+        if (Manager.isGamePaused)
+            return;
+
         if (debug)
         {
             // Allow devs to kill a player by pressing F1 while the player object is in debug mode

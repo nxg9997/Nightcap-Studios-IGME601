@@ -67,6 +67,10 @@ public class Spells : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If the game is paused, stop scene activities
+        if (Manager.isGamePaused)
+            return;
+
         // Only check input if the player is human-controlled
         if (!pData.testDummy)
         {

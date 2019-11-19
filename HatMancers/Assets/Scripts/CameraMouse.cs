@@ -44,6 +44,10 @@ public class CameraMouse : MonoBehaviour
 
     void LateUpdate()
     {
+        // If the game is paused, stop scene activities
+        if (Manager.isGamePaused)
+            return;
+
         // Unlock cursor if pausing
         if (Input.GetButtonDown("STA" + playerNum))
             isLocked = false;

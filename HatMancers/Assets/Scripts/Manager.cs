@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Manager : MonoBehaviour
 {
+    public static bool isGamePaused = false;
+    public GameObject pauseMenuUI;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,11 +16,44 @@ public class Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If player presses Escape button/Start button
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene(0);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            if (!isGamePaused)
+            {
+                PauseGame();
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }       
         }
+    }
+
+    // Load up the Pause Menu UI
+    void PauseGame()
+    {
+        pauseMenuUI.SetActive(true);
+        isGamePaused = true;
+    }
+
+    // Resume the play, when Resume button is pressed on the Pause Menu UI
+    public void ResumeGame()
+    {
+        pauseMenuUI.SetActive(false);
+        Time.timeScale = 1f;
+        isGamePaused = false;
+    }
+
+    // Maybe display controls on clicking Settings button
+    public void LoadSettings()
+    {
+        Debug.Log("Loading Settings......");
+    }
+
+    // Quit the current game and load the landing scene of the Build
+    public void QuitMatch()
+    {
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1f;
+        isGamePaused = false;
     }
 }

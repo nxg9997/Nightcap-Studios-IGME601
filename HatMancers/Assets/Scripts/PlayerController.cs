@@ -46,6 +46,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        // If the game is paused, stop scene activities
+        if (Manager.isGamePaused)
+        {
+            Time.timeScale = 0f;
+            return;
+        }
+
         if (!canMove) return;
 
         // Get axes values
