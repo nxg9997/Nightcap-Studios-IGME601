@@ -16,7 +16,7 @@ public class Manager : MonoBehaviour
     void Start()
     {
         // Getting the starting player count
-        int startingPlayers = PlayerPrefs.GetInt("PlayerCount", 2);
+        int startingPlayers = PlayerPrefs.GetInt("PlayerCount", 3);
         
         // SWITCH for the amount of players
         switch (startingPlayers)
