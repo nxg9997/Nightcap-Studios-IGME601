@@ -45,7 +45,7 @@ public class CameraMouse : MonoBehaviour
     void LateUpdate()
     {
         // If the game is paused, stop scene activities
-        if (PlayerController.isGamePaused)
+        if (Manager.isGamePaused)
             return;
 
         // Unlock cursor if pausing

@@ -25,7 +25,7 @@ public class HatSpawner : MonoBehaviour
     void Update()
     {
         // If the game is paused, stop scene activities
-        if (PlayerController.isGamePaused)
+        if (Manager.isGamePaused)
             return;
 
         currTimer += Time.deltaTime;

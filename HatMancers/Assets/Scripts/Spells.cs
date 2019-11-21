@@ -68,7 +68,7 @@ public class Spells : MonoBehaviour
     void Update()
     {
         // If the game is paused, stop scene activities
-        if (PlayerController.isGamePaused)
+        if (Manager.isGamePaused)
             return;
 
         // Only check input if the player is human-controlled

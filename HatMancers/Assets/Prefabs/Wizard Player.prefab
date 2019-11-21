@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 2066530691247582553}
   m_Layer: 0
   m_Name: Wizard Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -302,6 +302,7 @@ MonoBehaviour:
   rotationSpeed: 150
   jumpSpeed: 15
   gravityForce: 10
+  pauseMenuUI: {fileID: 0}
   canMove: 1
 --- !u!114 &2066530691247582554
 MonoBehaviour:

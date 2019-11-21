@@ -5,13 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class Manager : MonoBehaviour
 {
-    /*public static bool isGamePaused = false;
-    public GameObject pauseMenuUI;*/
+    public static Manager instance;
+    public static bool isGamePaused = false;
+    public static bool resumingGame = false;
+    public GameObject pauseMenuUI;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        instance = this;
     }
 
     // Update is called once per frame
@@ -30,11 +32,13 @@ public class Manager : MonoBehaviour
     }
 
     // Load up the Pause Menu UI
-/*    void PauseGame()
+    public void PauseGame()
     {
         pauseMenuUI.SetActive(true);
         isGamePaused = true;
         Time.timeScale = 0f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     // Resume the play, when Resume button is pressed on the Pause Menu UI
@@ -43,6 +47,7 @@ public class Manager : MonoBehaviour
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         isGamePaused = false;
+        resumingGame = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -56,8 +61,9 @@ public class Manager : MonoBehaviour
     // Quit the current game and load the landing scene of the Build
     public void QuitMatch()
     {
-        SceneManager.LoadScene(0);
         Time.timeScale = 1f;
         isGamePaused = false;
-    }*/
+        resumingGame = true;
+        SceneManager.LoadScene(0);
+    }
 }

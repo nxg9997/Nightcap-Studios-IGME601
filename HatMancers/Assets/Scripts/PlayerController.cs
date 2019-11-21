@@ -20,8 +20,7 @@ public class PlayerController : MonoBehaviour
     public float gravityForce; // Force of gravity weighing down in air
 
     //Pause Menu Variables
-    public static bool isGamePaused = false;
-    public GameObject pauseMenuUI;
+    private Manager manager;
 
     // Rigidbody for physics
     private Rigidbody body;
@@ -46,6 +45,7 @@ public class PlayerController : MonoBehaviour
         body = GetComponent<Rigidbody>();
         cameraMouse = head.gameObject.GetComponentInChildren<CameraMouse>();
         animScript = this.gameObject.GetComponentInChildren<WizardAnimScript>();
+        manager = Manager.instance;
     }
 
     // Update is called once per frame
@@ -53,13 +53,15 @@ public class PlayerController : MonoBehaviour
     {
 
         // If player presses Escape button/Start button
-        if (Input.GetKeyDown(KeyCode.Escape))//(Input.GetAxis("STA" + GameObject.Find("Player1").GetComponent<PlayerController>().GetPlayerNum()) > 0)
+        if (Input.GetAxis("STA" + playerNum) != 0)
         {
-            if (!isGamePaused)
+            if (!Manager.isGamePaused && !Manager.resumingGame)
             {
-                PauseGame();
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+                manager.PauseGame();
+            }
+            else if (Manager.resumingGame)
+            {
+                Manager.resumingGame = false;
             }
         }
     }
@@ -68,7 +70,7 @@ public class PlayerController : MonoBehaviour
     void LateUpdate()
     {
         // If the game is paused, stop scene activities
-        if (isGamePaused)
+        if (Manager.isGamePaused)
         {
             return;
         }
@@ -158,42 +160,4 @@ public class PlayerController : MonoBehaviour
     {
         return playerNum;
     }
-
-
-    // **************************************************************************************** //
-    // **********************************PAUSE MENU FUNCTIONS********************************** //
-    // **************************************************************************************** //
-    // Load up the Pause Menu UI
-    void PauseGame()
-    {
-        pauseMenuUI.SetActive(true);
-        isGamePaused = true;
-    }
-
-    // Resume the play, when Resume button is pressed on the Pause Menu UI
-    public void ResumeGame()
-    {
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        isGamePaused = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    // Maybe display controls on clicking Settings button
-    public void LoadSettings()
-    {
-        Debug.Log("Loading Settings......");
-    }
-
-    // Quit the current game and load the landing scene of the Build
-    public void QuitMatch()
-    {
-        SceneManager.LoadScene(0);
-        Time.timeScale = 1f;
-        isGamePaused = false;
-    }
-    // **************************************************************************************** //
-    // ********************************PAUSE MENU FUNCTIONS END******************************** //
-    // **************************************************************************************** //
 }
