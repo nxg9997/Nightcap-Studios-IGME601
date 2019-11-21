@@ -24,6 +24,10 @@ public class HatSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If the game is paused, stop scene activities
+        if (Manager.isGamePaused)
+            return;
+
         currTimer += Time.deltaTime;
         if(currTimer >= timeToSpawn)
         {
