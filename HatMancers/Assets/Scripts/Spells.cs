@@ -213,7 +213,8 @@ public class Spells : MonoBehaviour
             Debug.Log("hit object " + rch.collider.gameObject.name);
             if (rch.collider.gameObject.name.Contains("Player"))
             {
-                rch.collider.gameObject.GetComponent<PlayerData>().health -= bolt.GetComponent<SpellData>().damage;
+                // rch.collider.gameObject.GetComponent<PlayerData>().health -= bolt.GetComponent<SpellData>().damage;
+                rch.collider.gameObject.GetComponent<PlayerData>().ProcessDamage(bolt);
             }
         }
     }
