@@ -23,8 +23,8 @@ public class PlayerData : MonoBehaviour
 
     public float killPlaneDepth = -50;
 
-    public GameObject opponent;
-    public PlayerData opponentData;
+    //public GameObject opponent;
+    //public PlayerData opponentData;
     public int score;
 
     public bool testDummy = false;
