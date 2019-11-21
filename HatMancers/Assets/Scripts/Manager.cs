@@ -27,7 +27,7 @@ public class Manager : MonoBehaviour
     [SerializeField]
     private float timePast = 0;
 
-    public bool matchStarted = false;
+    public bool matchStarted = true;
 
     // Start is called before the first frame update
     void Start()
@@ -188,6 +188,7 @@ public class Manager : MonoBehaviour
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        matchTimerText.rectTransform.position = new Vector3(Screen.width / 2f, Screen.height - (matchTimerText.rectTransform.rect.height / 2f));
     }
 
     // Resume the play, when Resume button is pressed on the Pause Menu UI
@@ -199,6 +200,7 @@ public class Manager : MonoBehaviour
         resumingGame = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        matchTimerText.rectTransform.position = new Vector3(Screen.width / 2f, Screen.height / 2f);
     }
 
     // Maybe display controls on clicking Settings button
@@ -213,6 +215,7 @@ public class Manager : MonoBehaviour
         Time.timeScale = 1f;
         isGamePaused = false;
         resumingGame = true;
+        matchTimerText.rectTransform.position = new Vector3(0, 0, 0);
         SceneManager.LoadScene(0);
     }
 
