@@ -78,7 +78,7 @@ public class PlayerData : MonoBehaviour
     void Update()
     {
         // If the game is paused, stop scene activities
-        if (Manager.isGamePaused)
+        if (PlayerController.isGamePaused)
             return;
 
         if (debug)
