@@ -67,6 +67,10 @@ public class Spells : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If the game is paused, stop scene activities
+        if (Manager.isGamePaused)
+            return;
+
         // Only check input if the player is human-controlled
         if (!pData.testDummy)
         {
@@ -209,7 +213,8 @@ public class Spells : MonoBehaviour
             Debug.Log("hit object " + rch.collider.gameObject.name);
             if (rch.collider.gameObject.name.Contains("Player"))
             {
-                rch.collider.gameObject.GetComponent<PlayerData>().health -= bolt.GetComponent<SpellData>().damage;
+                // rch.collider.gameObject.GetComponent<PlayerData>().health -= bolt.GetComponent<SpellData>().damage;
+                rch.collider.gameObject.GetComponent<PlayerData>().ProcessDamage(bolt);
             }
         }
     }

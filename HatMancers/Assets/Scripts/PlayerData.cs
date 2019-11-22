@@ -24,9 +24,9 @@ public class PlayerData : MonoBehaviour
 
     public float killPlaneDepth = -50;
 
-    public GameObject opponent;
-    public PlayerData opponentData;
-    private int score;
+    //public GameObject opponent;
+    //public PlayerData opponentData;
+    public int score;
 
     public bool testDummy = false;
 
@@ -40,6 +40,9 @@ public class PlayerData : MonoBehaviour
     public RectTransform lightningCrosshair;
 
     public bool debug = false;
+
+    // Private Scripts
+    private GameObject lastDamageDealer = null;
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +58,7 @@ public class PlayerData : MonoBehaviour
         pCtrl = GetComponent<PlayerController>();
         cCollider = GetComponent<CapsuleCollider>();
 
-        if(pCtrl.playerNum == 1 || pCtrl.playerNum == 3)
+        /*if(pCtrl.playerNum == 1 || pCtrl.playerNum == 3)
         {
             opponent = GameObject.Find("Player2");
         }
@@ -63,7 +66,7 @@ public class PlayerData : MonoBehaviour
         {
             opponent = GameObject.Find("Player1");
         }
-        opponentData = opponent.GetComponent<PlayerData>();
+        opponentData = opponent.GetComponent<PlayerData>();*/
 
         Transform[] children = GetComponentsInChildren<Transform>();
         foreach(Transform g in children)
@@ -107,7 +110,7 @@ public class PlayerData : MonoBehaviour
         {
             StickyHat();
             CheckKillPlane();
-            CheckHealth();
+            // CheckHealth();
         }
     }
 
@@ -160,7 +163,7 @@ public class PlayerData : MonoBehaviour
     /// <summary>
     /// Kills the player if their health falls to/below 0
     /// </summary>
-    void CheckHealth()
+    /*void CheckHealth()
     {
         if(health <= 0)
         {
@@ -168,6 +171,15 @@ public class PlayerData : MonoBehaviour
             opponentData.IncrementScore();
             GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
         }
+    }*/
+
+    /// <summary>
+    /// Reports the the player is dead, specifically by setting the "dead" boolean + turning off the mesh renderer
+    /// </summary>
+    void Die()
+    {
+        dead = true;
+        GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
     }
 
     /// <summary>
@@ -185,7 +197,30 @@ public class PlayerData : MonoBehaviour
             health = maxHealth;
             spawnTimer = 0;
 
-            transform.position = GameObject.Find("Manager").GetComponent<RespawnManager>().FindSpawnPoint(opponent);
+            //transform.position = GameObject.Find("Manager").GetComponent<RespawnManager>().FindSpawnPoint(opponent);
+            transform.position = GameObject.Find("Manager").GetComponent<RespawnManager>().FindSpawnPoint(lastDamageDealer);
+        }
+    }
+
+    /// <summary>
+    /// Processes a damaging object attacking the player.
+    /// </summary>
+    /// <param name="collider"></param>
+    public void ProcessDamage(GameObject collider)
+    {
+        // Getting the components that are part of the collider
+        SpellData spell = collider.gameObject.GetComponent<SpellData>();
+
+        // IF the colliding object has a SpellData instance...
+        if (spell != null)
+        {
+            lastDamageDealer = spell.origin;
+            health -= spell.damage;
+            if (health < 1 && !dead)
+            {
+                Die();
+                lastDamageDealer.GetComponent<PlayerData>().IncrementScore();
+            }
         }
     }
 
@@ -212,11 +247,11 @@ public class PlayerData : MonoBehaviour
         {
             if (col.gameObject.GetComponent<SpellData>().origin.name != gameObject.name)
             {
-                health -= col.gameObject.GetComponent<SpellData>().damage;
+                //health -= col.gameObject.GetComponent<SpellData>().damage;
+                ProcessDamage(col.gameObject);
                 body.velocity = new Vector3(0, 40, 0);
                 StartCoroutine("DoBlink");
             }
-            //Debug.Log(health);
         }
     }
 
@@ -226,11 +261,11 @@ public class PlayerData : MonoBehaviour
         {
             if (col.gameObject.GetComponent<SpellData>().origin.name != gameObject.name)
             {
-                health -= col.gameObject.GetComponent<SpellData>().damage;
+                //health -= col.gameObject.GetComponent<SpellData>().damage;
+                ProcessDamage(col.gameObject);
                 body.velocity = new Vector3(0, 40, 0);
                 StartCoroutine("DoBlink");
             }
-            //Debug.Log(health);
         }
     }
 
