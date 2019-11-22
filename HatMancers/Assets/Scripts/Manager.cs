@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Manager : MonoBehaviour
 {
@@ -10,15 +11,30 @@ public class Manager : MonoBehaviour
     public GameObject player2;
     public GameObject player3;
     public GameObject player4;
+    public List<GameObject> players;
     public bool debug = false;
     public static Manager instance;
     public static bool isGamePaused = false;
     public static bool resumingGame = false;
     public GameObject pauseMenuUI;
 
+    public float matchTimeMin = 5;
+    private Text matchTimerText;
+
+    [SerializeField]
+    private float matchTimeMs;
+
+    [SerializeField]
+    private float timePast = 0;
+
+    public bool matchStarted = true;
+
     // Start is called before the first frame update
     void Start()
     {
+        matchTimeMs = matchTimeMin * 60; // convert to ms
+        matchTimerText = GameObject.Find("MatchTimer").GetComponent<Text>();
+
         instance = this;
 
         // Getting the starting player count
@@ -46,6 +62,10 @@ public class Manager : MonoBehaviour
                     Camera playerCamera2 = player2.GetComponentInChildren<Camera>();
                     playerCamera1.rect = new Rect(0f, 0.5f, 1f, 0.5f);
                     playerCamera2.rect = new Rect(0f, 0f, 1f, 0.5f);
+
+                    // Add active players
+                    players.Add(player1);
+                    players.Add(player2);
                 }
                 break;
             case 3:
@@ -62,13 +82,25 @@ public class Manager : MonoBehaviour
                     // Setting the remaining player's camera spaces
                     Camera playerCamera3 = player3.GetComponentInChildren<Camera>();
                     playerCamera3.rect = new Rect(0f, 0f, 1f, 0.5f);
+
+                    // Add active players
+                    players.Add(player1);
+                    players.Add(player2);
+                    players.Add(player3);
                 }
 
                 break;
             case 4:
                 if (debug)
                     Debug.Log("Manager.Start(): Case 4 flipped");
-                // ELSE, do nothing (game will proceed with 4 players)
+                else
+                {
+                    // Add active players
+                    players.Add(player1);
+                    players.Add(player2);
+                    players.Add(player3);
+                    players.Add(player4);
+                }
                 break;
             default:
                 Debug.LogError(startingPlayers + "-player arenas are currently not supported!");
@@ -79,16 +111,73 @@ public class Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {       
-        // If player presses Escape button/Start button
-/*        if (Input.GetKeyDown(KeyCode.Escape))//(Input.GetAxis("STA" + GameObject.Find("Player1").GetComponent<PlayerController>().GetPlayerNum()) > 0)
+        if (matchStarted)
         {
-            if (!isGamePaused)
+            timePast += Time.deltaTime;
+
+            float timer = matchTimeMs - timePast;
+            
+
+            if(timePast >= matchTimeMs)
             {
-                PauseGame();
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+                //game end
+                // Get texts of each player and their scores
+                List<Text> resultTexts = new List<Text>();
+                List<int> playerScores = new List<int>();
+                foreach(GameObject player in players)
+                {
+                    Text[] allText = player.GetComponentsInChildren<Text>();
+                    foreach (Text t in allText)
+                    {
+                        if (t.gameObject.name == "ResultText")
+                        {
+                            resultTexts.Add(t);
+                        }
+                    }
+
+                    playerScores.Add(player.GetComponent<PlayerData>().score);
+                }
+
+                // Check for winners
+                List<int> winnerIndices = new List<int>();
+                int winScore = 0;
+                for (int i = 0; i < playerScores.Count; i++)
+                {
+                    if (playerScores[i] > winScore)
+                    {
+                        winScore = playerScores[i];
+                        winnerIndices.Clear();
+                        winnerIndices.Add(i);
+                    }
+                    else if (playerScores[i] == winScore)
+                    {
+                        winnerIndices.Add(i);
+                    }
+                }
+
+                // Change texts appropriately
+                for (int i = 0; i < resultTexts.Count; i++)
+                {
+                    if (winnerIndices.Contains(i))
+                    {
+                        resultTexts[i].text = "WIN";
+                    }
+                    else
+                    {
+                        resultTexts[i].text = "LOSE";
+                    }
+                }
+
+                // Make a delay before going back to title screen
+                StartCoroutine(WaitForEnd());
             }
-        }*/
+            else
+            {
+                int minutes = (int)timer / 60;
+                int seconds = (int)timer % 60;
+                matchTimerText.text = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+            }
+        }
     }
 
     // Load up the Pause Menu UI
@@ -99,6 +188,7 @@ public class Manager : MonoBehaviour
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        matchTimerText.rectTransform.position = new Vector3(Screen.width / 2f, Screen.height - (matchTimerText.rectTransform.rect.height / 2f));
     }
 
     // Resume the play, when Resume button is pressed on the Pause Menu UI
@@ -110,6 +200,7 @@ public class Manager : MonoBehaviour
         resumingGame = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        matchTimerText.rectTransform.position = new Vector3(Screen.width / 2f, Screen.height / 2f);
     }
 
     // Maybe display controls on clicking Settings button
@@ -124,6 +215,15 @@ public class Manager : MonoBehaviour
         Time.timeScale = 1f;
         isGamePaused = false;
         resumingGame = true;
+        matchTimerText.rectTransform.position = new Vector3(0, 0, 0);
         SceneManager.LoadScene(0);
     }
+
+    IEnumerator WaitForEnd()
+    {
+        yield return new WaitForSecondsRealtime(10);
+        SceneManager.LoadScene(0);
+    }
+
+
 }
