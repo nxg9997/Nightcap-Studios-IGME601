@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// Handles all inputs from the player. Currently consists of:
 ///     - Movement
@@ -18,6 +19,9 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed; // Initial jump velocity
     public float jumpHoldTime; // Time the button can be held down to add force into the air
     public float gravityForce; // Force of gravity weighing down in air
+
+    //Pause Menu Variables
+    private Manager manager;
 
     // Rigidbody for physics
     private Rigidbody body;
@@ -46,11 +50,36 @@ public class PlayerController : MonoBehaviour
         body = GetComponent<Rigidbody>();
         cameraMouse = head.gameObject.GetComponentInChildren<CameraMouse>();
         animScript = this.gameObject.GetComponentInChildren<WizardAnimScript>();
+        manager = Manager.instance;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        // If player presses Escape button/Start button
+        if (Input.GetAxis("STA" + playerNum) != 0)
+        {
+            if (!Manager.isGamePaused && !Manager.resumingGame)
+            {
+                manager.PauseGame();
+            }
+            else if (Manager.resumingGame)
+            {
+                Manager.resumingGame = false;
+            }
+        }
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
+        // If the game is paused, stop scene activities
+        if (Manager.isGamePaused)
+        {
+            return;
+        }
+
         if (!canMove) return;
 
         // Get axes values
