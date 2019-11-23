@@ -11,7 +11,8 @@ public class Manager : MonoBehaviour
     public GameObject player2;
     public GameObject player3;
     public GameObject player4;
-    public List<GameObject> players;
+    [SerializeField]
+    public List<GameObject> players = new List<GameObject>();
     public bool debug = false;
     public static Manager instance;
     public static bool isGamePaused = false;
@@ -105,6 +106,11 @@ public class Manager : MonoBehaviour
             default:
                 Debug.LogError(startingPlayers + "-player arenas are currently not supported!");
                 break;
+        }
+
+        if (debug)
+        {
+            Debug.Log("player count: " + players.Count);
         }
     }
 

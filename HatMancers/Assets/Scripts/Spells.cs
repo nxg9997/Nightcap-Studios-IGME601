@@ -41,6 +41,7 @@ public class Spells : MonoBehaviour
     public float bearTime = 0;
     private bool bearDelay = false;
     public float bearForce = 1.0f;
+    public float bearSpeed = 500;
     private float originalSpeed;
 
     // UI Color
@@ -129,6 +130,7 @@ public class Spells : MonoBehaviour
             Bear();
             bearDelay = true;
             bearTime = 0;
+            GetComponent<PlayerController>().speed = bearSpeed;
         }
         else
         {
