@@ -289,7 +289,8 @@ public class PlayerData : MonoBehaviour
             if (col.gameObject.GetComponent<SpellData>().origin.name != gameObject.name)
             {
                 health -= col.gameObject.GetComponent<SpellData>().damage;
-                gameObject.GetComponent<Rigidbody>().AddForce(col.gameObject.GetComponent<SpellData>().origin.GetComponent<Rigidbody>().velocity * 1000);
+                Vector3 v3 = new Vector3(col.gameObject.GetComponent<SpellData>().origin.GetComponent<Spells>().cam.transform.forward.x, 0, col.gameObject.GetComponent<SpellData>().origin.GetComponent<Spells>().cam.transform.forward.z);
+                gameObject.GetComponent<Rigidbody>().AddForce(v3.normalized * 500, ForceMode.Impulse);
             }
             //Debug.Log(health);
         }

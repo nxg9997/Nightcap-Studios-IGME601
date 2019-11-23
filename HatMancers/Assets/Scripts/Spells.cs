@@ -54,7 +54,7 @@ public class Spells : MonoBehaviour
 
     // Other
     private GameObject spellOrigin;
-    private Camera cam;
+    public Camera cam;
 
     // Start is called before the first frame update
     void Start()
@@ -381,7 +381,9 @@ public class Spells : MonoBehaviour
         GameObject bear = Instantiate(bearObj, transform.position, transform.rotation * Quaternion.AngleAxis(180, new Vector3(0,1,0)));
         bear.GetComponent<SpellData>().origin = gameObject;
 
-        gameObject.GetComponent<PlayerController>().speed = bearForce;
+        //gameObject.GetComponent<PlayerController>().speed = bearForce;
+        Vector3 v3 = new Vector3(cam.transform.forward.x, 0, cam.transform.forward.z);
+        gameObject.GetComponent<Rigidbody>().AddForce(v3.normalized * bearForce, ForceMode.Impulse);
 
         currBear = bear;
     }
