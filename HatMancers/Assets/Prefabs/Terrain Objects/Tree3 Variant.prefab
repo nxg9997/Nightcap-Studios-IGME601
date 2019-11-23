@@ -1,18 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!65 &3254103445270377602
+--- !u!65 &2210693228454667816
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 306331191990931680}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b51dfa6bd3eae14429dc725a35bc4c11, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5138906, y: 1.5068512, z: 1.513891}
-  m_Center: {x: -0.16543326, y: 1.7598953, z: -0.25694513}
+  m_Size: {x: 0.21820077, y: 0.4494397, z: 0.38893384}
+  m_Center: {x: -0.09704594, y: 0.82528037, z: -0.40081152}
+--- !u!135 &2327279361591619169
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306331191990931680}
+  m_Material: {fileID: 13400000, guid: b51dfa6bd3eae14429dc725a35bc4c11, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.80894977
+  m_Center: {x: -0.16, y: 1.75, z: -0.26050824}
 --- !u!65 &8540949431825794030
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20,12 +33,12 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 306331191990931680}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b51dfa6bd3eae14429dc725a35bc4c11, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.24676523, y: 1.0211182, z: 0.6198629}
-  m_Center: {x: -0.09503178, y: 0.48925275, z: -0.2815857}
+  m_Size: {x: 0.21288554, y: 1.0211182, z: 0.21436056}
+  m_Center: {x: -0.09738922, y: 0.48925275, z: -0.09527843}
 --- !u!1001 &8602336597631994345
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33,6 +46,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -927199367670048503, guid: 501342a1cda11c4478d8753d6f68474f,
+        type: 3}
+      propertyPath: m_Name
+      value: Tree3 Variant
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 501342a1cda11c4478d8753d6f68474f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -102,11 +120,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: 501342a1cda11c4478d8753d6f68474f,
-        type: 3}
-      propertyPath: m_Name
-      value: Tree3 Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 501342a1cda11c4478d8753d6f68474f, type: 3}

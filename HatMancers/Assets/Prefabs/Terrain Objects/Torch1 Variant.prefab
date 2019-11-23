@@ -1,18 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!65 &6161270696965845940
-BoxCollider:
+--- !u!136 &2509364160656718567
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4374923638941005587}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b51dfa6bd3eae14429dc725a35bc4c11, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.6312418, y: 2.3131433, z: 0.83810663}
-  m_Center: {x: -2.0911345, y: 3.1299589, z: -1.9966981}
+  m_Radius: 0.39105415
+  m_Height: 2.3443785
+  m_Direction: 1
+  m_Center: {x: -2.078803, y: 3.085875, z: -2.0030756}
 --- !u!1001 &5735110686838025754
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20,6 +21,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -927199367670048503, guid: a191f261b1aa34348b8caa37f1af8ad0,
+        type: 3}
+      propertyPath: m_Name
+      value: Torch1 Variant
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: a191f261b1aa34348b8caa37f1af8ad0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -89,11 +95,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: a191f261b1aa34348b8caa37f1af8ad0,
-        type: 3}
-      propertyPath: m_Name
-      value: Torch1 Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a191f261b1aa34348b8caa37f1af8ad0, type: 3}
