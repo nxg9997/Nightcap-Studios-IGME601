@@ -215,6 +215,14 @@ public class Spells : MonoBehaviour
         }
     }
 
+    public void ResetSpells()
+    {
+        if (currBolt != null) Destroy(currBolt);
+        if (currIce != null) Destroy(currIce);
+        if (currBear != null) Destroy(currBear);
+        GetComponent<PlayerController>().speed = originalSpeed;
+    }
+
     /// <summary>
     /// Shoots a fireball if the fire hat is equipped. Fireballs can only be launched after a set interval.
     /// </summary>

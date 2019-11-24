@@ -241,6 +241,7 @@ public class PlayerData : MonoBehaviour
         {
             if(currHat != null)
             {
+                GetComponent<Spells>().ResetSpells();
                 Destroy(currHat);
 
                 // Deactivate crosshairs
