@@ -282,8 +282,11 @@ public class PlayerData : MonoBehaviour
     IEnumerator BlinkAnimation()
     {
         DisableWizardModel();
-        yield return new WaitForSeconds(0.125f);
-        EnableWizardModel();
+        if (health > 0)
+        {
+            yield return new WaitForSeconds(0.125f);
+            EnableWizardModel();
+        }
     }
 
     void DisableWizardModel()
