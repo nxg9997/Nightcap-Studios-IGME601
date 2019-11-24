@@ -146,6 +146,10 @@ public class PlayerData : MonoBehaviour
         {
             currMagic = "ice";
         }
+        else if (currHat.tag == "PoisonHat")
+        {
+            currMagic = "poison";
+        }
         else if (currHat.tag == "BubbleHat")
         {
             currMagic = "bubbles";

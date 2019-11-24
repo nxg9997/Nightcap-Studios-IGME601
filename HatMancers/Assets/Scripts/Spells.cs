@@ -44,6 +44,15 @@ public class Spells : MonoBehaviour
     public float bearSpeed = 500;
     private float originalSpeed;
 
+    // Poison Data
+    public GameObject poisonProj;
+    public float poisonForce = 5.0f;
+    public float poisonForceVert = 5.0f;
+    private bool poisonDelay = false;
+    private float poisonTime = 0.0f;
+    public float poisonDelayTime = 2;
+    public Vector3 poisonOffset;
+
     // UI Color
     public Color UIColor_Fire;
     public Color UIColor_Ice;
@@ -109,6 +118,12 @@ public class Spells : MonoBehaviour
             fireDelay = true;
             fireTime = 0;
         }
+        else if ((Input.GetAxis("LT" + PlayerNum()) > 0 || Input.GetAxis("RT" + PlayerNum()) > 0) && !poisonDelay && pData.currMagic == "poison")
+        {
+            Poison();
+            poisonDelay = true;
+            poisonTime = 0;
+        }
         else if ((Input.GetAxis("LT" + PlayerNum()) > 0 || Input.GetAxis("RT" + PlayerNum()) > 0) && !lightningDelay && pData.currMagic == "lightning")
         {
             Lightning();
@@ -148,6 +163,14 @@ public class Spells : MonoBehaviour
                 if (bubbleTime > bubbleDelayTime)
                 {
                     bubbleDelay = false;
+                }
+            }
+            else if (pData.currMagic == "poison")
+            {
+                poisonTime += Time.deltaTime;
+                if (poisonTime > poisonDelayTime)
+                {
+                    poisonDelay = false;
                 }
             }
             else if (pData.currMagic == "lightning")
@@ -213,6 +236,27 @@ public class Spells : MonoBehaviour
         
         // Shoot fireball
         fireball.GetComponent<Rigidbody>().AddForce(fireball.transform.forward * fireForce);
+    }
+
+    void Poison()
+    {
+        // Create fireball and set its rotation
+        GameObject poison = GameObject.Instantiate(poisonProj, spellOrigin.transform.position + poisonOffset + spellOrigin.transform.forward * 2, Quaternion.identity);
+        poison.GetComponent<SpellData>().origin = gameObject;
+        poison.transform.forward = cam.transform.forward;
+        /*Transform[] trans = gameObject.GetComponentsInChildren<Transform>();
+        foreach(Transform t in trans)
+        {
+            if(t.gameObject.name == "HatLocation")
+            {
+                fireball.transform.forward = t.forward;//gameObject.GetComponentInChildren<Camera>().transform.forward;
+                break;
+            }
+        }*/
+
+        // Shoot fireball
+        poison.GetComponent<Rigidbody>().AddForce(poison.transform.forward * poisonForce);
+        poison.GetComponent<Rigidbody>().AddForce(poison.transform.up * poisonForceVert);
     }
 
     /// <summary>
@@ -306,6 +350,9 @@ public class Spells : MonoBehaviour
             case "fire":
                 result = (fireTime / fireDelayTime);
                 break;
+            case "poison":
+                result = (poisonTime / poisonDelayTime);
+                break;
             case "lightning":
                 result = (lightningTime / lightningDelayTime);
                 break;
@@ -346,6 +393,9 @@ public class Spells : MonoBehaviour
             case "none":
                 break;
             case "fire":
+                result = UIColor_Fire;
+                break;
+            case "poison":
                 result = UIColor_Fire;
                 break;
             case "lightning":
