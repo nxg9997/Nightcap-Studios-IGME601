@@ -26,6 +26,33 @@ public class Spells : MonoBehaviour
     public GameObject iceObj;
     private GameObject currIce;
 
+    // Bubble Data
+    public GameObject bubbleObj;
+    private GameObject[] currBubbles;
+    public float bubbleDelayTime = 0.25f;
+    public float bubbleTime = 0;
+    private bool bubbleDelay = false;
+    public float bubbleForce = 1.0f;
+
+    // Bear Data
+    public GameObject bearObj;
+    private GameObject currBear;
+    public float bearDelayTime = 1.0f;
+    public float bearTime = 0;
+    private bool bearDelay = false;
+    public float bearForce = 1.0f;
+    public float bearSpeed = 500;
+    private float originalSpeed;
+
+    // Poison Data
+    public GameObject poisonProj;
+    public float poisonForce = 5.0f;
+    public float poisonForceVert = 5.0f;
+    private bool poisonDelay = false;
+    private float poisonTime = 0.0f;
+    public float poisonDelayTime = 2;
+    public Vector3 poisonOffset;
+
     // UI Color
     public Color UIColor_Fire;
     public Color UIColor_Ice;
@@ -37,7 +64,7 @@ public class Spells : MonoBehaviour
 
     // Other
     private GameObject spellOrigin;
-    private Camera cam;
+    public Camera cam;
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +89,8 @@ public class Spells : MonoBehaviour
         // Setting the spell charge time variables
         fireTime = fireDelayTime;
         lightningTime = lightningDelayTime;
+
+        originalSpeed = GetComponent<PlayerController>().speed;
     }
 
     // Update is called once per frame
@@ -89,6 +118,12 @@ public class Spells : MonoBehaviour
             fireDelay = true;
             fireTime = 0;
         }
+        else if ((Input.GetAxis("LT" + PlayerNum()) > 0 || Input.GetAxis("RT" + PlayerNum()) > 0) && !poisonDelay && pData.currMagic == "poison")
+        {
+            Poison();
+            poisonDelay = true;
+            poisonTime = 0;
+        }
         else if ((Input.GetAxis("LT" + PlayerNum()) > 0 || Input.GetAxis("RT" + PlayerNum()) > 0) && !lightningDelay && pData.currMagic == "lightning")
         {
             Lightning();
@@ -99,6 +134,19 @@ public class Spells : MonoBehaviour
         {
             Ice();
         }
+        else if ((Input.GetAxis("LT" + PlayerNum()) > 0 || Input.GetAxis("RT" + PlayerNum()) > 0) && pData.currMagic == "bubbles" && !bubbleDelay)
+        {
+            Bubbles();
+            bubbleDelay = true;
+            bubbleTime = 0;
+        }
+        else if ((Input.GetAxis("LT" + PlayerNum()) > 0 || Input.GetAxis("RT" + PlayerNum()) > 0) && pData.currMagic == "bear" && !bearDelay)
+        {
+            Bear();
+            bearDelay = true;
+            bearTime = 0;
+            GetComponent<PlayerController>().speed = bearSpeed;
+        }
         else
         {
             if(pData.currMagic == "fire")
@@ -107,6 +155,22 @@ public class Spells : MonoBehaviour
                 if (fireTime > fireDelayTime)
                 {
                     fireDelay = false;
+                }
+            }
+            else if (pData.currMagic == "bubbles")
+            {
+                bubbleTime += Time.deltaTime;
+                if (bubbleTime > bubbleDelayTime)
+                {
+                    bubbleDelay = false;
+                }
+            }
+            else if (pData.currMagic == "poison")
+            {
+                poisonTime += Time.deltaTime;
+                if (poisonTime > poisonDelayTime)
+                {
+                    poisonDelay = false;
                 }
             }
             else if (pData.currMagic == "lightning")
@@ -132,8 +196,31 @@ public class Spells : MonoBehaviour
                 Destroy(currIce);
                 currIce = null;
             }
+            else if (pData.currMagic == "bear")
+            {
+                if(currBear != null)
+                {
+                    currBear.transform.position = transform.position;
+                    currBear.transform.rotation = transform.rotation * Quaternion.AngleAxis(180, new Vector3(0, 1, 0));
+                }
+                bearTime += Time.deltaTime;
+                if (bearTime > bearDelayTime)
+                {
+                    bearDelay = false;
+                    Destroy(currBear);
+                    GetComponent<PlayerController>().speed = originalSpeed;
+                }
+            }
 
         }
+    }
+
+    public void ResetSpells()
+    {
+        if (currBolt != null) Destroy(currBolt);
+        if (currIce != null) Destroy(currIce);
+        if (currBear != null) Destroy(currBear);
+        GetComponent<PlayerController>().speed = originalSpeed;
     }
 
     /// <summary>
@@ -157,6 +244,27 @@ public class Spells : MonoBehaviour
         
         // Shoot fireball
         fireball.GetComponent<Rigidbody>().AddForce(fireball.transform.forward * fireForce);
+    }
+
+    void Poison()
+    {
+        // Create fireball and set its rotation
+        GameObject poison = GameObject.Instantiate(poisonProj, spellOrigin.transform.position + poisonOffset + spellOrigin.transform.forward * 2, Quaternion.identity);
+        poison.GetComponent<SpellData>().origin = gameObject;
+        poison.transform.forward = cam.transform.forward;
+        /*Transform[] trans = gameObject.GetComponentsInChildren<Transform>();
+        foreach(Transform t in trans)
+        {
+            if(t.gameObject.name == "HatLocation")
+            {
+                fireball.transform.forward = t.forward;//gameObject.GetComponentInChildren<Camera>().transform.forward;
+                break;
+            }
+        }*/
+
+        // Shoot fireball
+        poison.GetComponent<Rigidbody>().AddForce(poison.transform.forward * poisonForce);
+        poison.GetComponent<Rigidbody>().AddForce(poison.transform.up * poisonForceVert);
     }
 
     /// <summary>
@@ -250,8 +358,17 @@ public class Spells : MonoBehaviour
             case "fire":
                 result = (fireTime / fireDelayTime);
                 break;
+            case "poison":
+                result = (poisonTime / poisonDelayTime);
+                break;
             case "lightning":
                 result = (lightningTime / lightningDelayTime);
+                break;
+            case "bubbles":
+                result = (bubbleTime / bubbleDelayTime);
+                break;
+            case "bear":
+                result = (bearTime / bearDelayTime);
                 break;
             case "none":
             case "ice":
@@ -286,11 +403,20 @@ public class Spells : MonoBehaviour
             case "fire":
                 result = UIColor_Fire;
                 break;
+            case "poison":
+                result = UIColor_Fire;
+                break;
             case "lightning":
                 result = UIColor_Lightning;
                 break;
             case "ice":
                 result = UIColor_Ice;
+                break;
+            case "bubbles":
+                result = UIColor_Ice;
+                break;
+            case "bear":
+                result = UIColor_Fire;
                 break;
             default:
                 Debug.LogError("You have not defined the \"" + pData.currMagic + "\" case in SpellColorUI()!");
@@ -299,6 +425,27 @@ public class Spells : MonoBehaviour
 
         // Returning the result color
         return result;
+    }
+
+
+    void Bubbles()
+    {
+        GameObject bubble = Instantiate(bubbleObj, spellOrigin.transform.position + spellOrigin.transform.forward * 2, Quaternion.identity);
+        bubble.GetComponent<SpellData>().origin = gameObject;
+        bubble.transform.forward = cam.transform.forward;
+        bubble.GetComponent<Rigidbody>().AddForce(bubble.transform.forward * bubbleForce);
+    }
+
+    void Bear()
+    {
+        GameObject bear = Instantiate(bearObj, transform.position, transform.rotation * Quaternion.AngleAxis(180, new Vector3(0,1,0)));
+        bear.GetComponent<SpellData>().origin = gameObject;
+
+        //gameObject.GetComponent<PlayerController>().speed = bearForce;
+        Vector3 v3 = new Vector3(cam.transform.forward.x, 0, cam.transform.forward.z);
+        gameObject.GetComponent<Rigidbody>().AddForce(v3.normalized * bearForce, ForceMode.Impulse);
+
+        currBear = bear;
     }
 
     /// <summary>

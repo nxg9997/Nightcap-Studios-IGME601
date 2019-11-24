@@ -12,6 +12,8 @@ public class RespawnManager : MonoBehaviour
 
     public bool debug = false;
 
+    public List<GameObject> players;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,34 +33,88 @@ public class RespawnManager : MonoBehaviour
     /// <returns>Spawn location</returns>
     public Vector3 FindSpawnPoint(GameObject opp)
     {
+        players = GameObject.Find("Manager").GetComponent<Manager>().players;
         ArenaBounds abounds = bounds.GetComponent<ArenaBounds>();
         Vector3 result = Vector3.zero;
-
-        int oppQuad = FindQuadrant(opp);
 
         Vector3 quadCenter = abounds.center;
         Vector3 quadSize = (abounds.PointA - abounds.PointB) / 4;
 
-        //set spawn quad to be 2
-        if (oppQuad == 0)
-        {
-            quadCenter = abounds.quad2;
-        }
-        else if (oppQuad == 1) // 3
-        {
-            quadCenter = abounds.quad3;
+        int[] quadCounts = { 0, 0, 0, 0 };
 
-        }
-        else if (oppQuad == 2) // 0
+        foreach(GameObject p in players)
         {
-            quadCenter = abounds.quad0;
+            int oppQuad = FindQuadrant(p);
+            //Debug.Log(oppQuad);
 
+            //set spawn quad to be 2
+            if (oppQuad == 0)
+            {
+                //quadCenter = abounds.quad2;
+                quadCounts[0]++;
+            }
+            else if (oppQuad == 1) // 3
+            {
+                //quadCenter = abounds.quad3;
+                quadCounts[1]++;
+
+            }
+            else if (oppQuad == 2) // 0
+            {
+                //quadCenter = abounds.quad0;
+                quadCounts[2]++;
+
+            }
+            else if (oppQuad == 3) // 1
+            {
+                //quadCenter = abounds.quad1;
+                quadCounts[3]++;
+
+            }
         }
-        else if (oppQuad == 3) // 1
+
+        if(debug) Debug.Log(quadCounts[0] + " " + quadCounts[1] + " " + quadCounts[2] + " " + quadCounts[3]);
+
+        bool foundSpawn = false;
+        int least = 10;
+        int leastQuad = 0;
+
+        for(int i = 0; i < 4; i++)
         {
-            quadCenter = abounds.quad1;
+            if(quadCounts[i] <= least)
+            {
+                least = quadCounts[i];
+                leastQuad = i;
+            }
 
+            if(quadCounts[i] == 0)
+            {
+                foundSpawn = true;
+                leastQuad = i;
+                switch (i)
+                {
+                    case 0: quadCenter = abounds.quad2;break;
+                    case 1: quadCenter = abounds.quad3;break;
+                    case 2: quadCenter = abounds.quad0;break;
+                    case 3: quadCenter = abounds.quad1;break;
+                    default: quadCenter = abounds.quad0;break;
+                }
+            }
         }
+
+        if (!foundSpawn)
+        {
+            switch (leastQuad)
+            {
+                case 0: quadCenter = abounds.quad2; break;
+                case 1: quadCenter = abounds.quad3; break;
+                case 2: quadCenter = abounds.quad0; break;
+                case 3: quadCenter = abounds.quad1; break;
+                default: quadCenter = abounds.quad0; break;
+            }
+        }
+
+        if(debug) Debug.Log("Spawn Quad: " + leastQuad);
 
         float rX = Random.Range(-quadSize.x/2, quadSize.x/2);
         float rZ = Random.Range(-quadSize.z/2, quadSize.z/2);

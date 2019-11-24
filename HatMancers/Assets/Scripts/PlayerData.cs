@@ -148,6 +148,18 @@ public class PlayerData : MonoBehaviour
         {
             currMagic = "ice";
         }
+        else if (currHat.tag == "PoisonHat")
+        {
+            currMagic = "poison";
+        }
+        else if (currHat.tag == "BubbleHat")
+        {
+            currMagic = "bubbles";
+        }
+        else if (currHat.tag == "BearHat")
+        {
+            currMagic = "bear";
+        }
     }
 
     /// <summary>
@@ -236,6 +248,7 @@ public class PlayerData : MonoBehaviour
         {
             if(currHat != null)
             {
+                GetComponent<Spells>().ResetSpells();
                 Destroy(currHat);
 
                 // Deactivate crosshairs
@@ -306,6 +319,29 @@ public class PlayerData : MonoBehaviour
         {
             if(!renderer.enabled)
             renderer.enabled = true;
+        }
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Damage" && col.gameObject.name.Contains("Bubble")) // Damages the player if they are hit by a damaging source (denoted by the "Damage" tag)
+        {
+            if (col.gameObject.GetComponent<SpellData>().origin.name != gameObject.name)
+            {
+                health -= col.gameObject.GetComponent<SpellData>().damage;
+                Destroy(col.gameObject);
+            }
+            //Debug.Log(health);
+        }
+        else if (col.gameObject.tag == "Damage" && col.gameObject.name.Contains("Bear")) // Damages the player if they are hit by a damaging source (denoted by the "Damage" tag)
+        {
+            if (col.gameObject.GetComponent<SpellData>().origin.name != gameObject.name)
+            {
+                health -= col.gameObject.GetComponent<SpellData>().damage;
+                Vector3 v3 = new Vector3(col.gameObject.GetComponent<SpellData>().origin.GetComponent<Spells>().cam.transform.forward.x, 0, col.gameObject.GetComponent<SpellData>().origin.GetComponent<Spells>().cam.transform.forward.z);
+                gameObject.GetComponent<Rigidbody>().AddForce(v3.normalized * 500, ForceMode.Impulse);
+            }
+            //Debug.Log(health);
         }
     }
 
