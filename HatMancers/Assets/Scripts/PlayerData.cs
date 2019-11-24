@@ -214,11 +214,14 @@ public class PlayerData : MonoBehaviour
         // IF the colliding object has a SpellData instance...
         if (spell != null)
         {
-            body.velocity = new Vector3(0, 40, 0);
-            StartCoroutine("DoBlink");
+            //body.velocity = new Vector3(0, 40, 0);
             lastDamageDealer = spell.origin;
             health -= spell.damage;
-            if (health < 1 && !dead)
+            if (health > 0)
+            {
+                StartCoroutine("DoBlink");
+            }
+                if (health < 1 && !dead)
             {
                 Die();
                 lastDamageDealer.GetComponent<PlayerData>().IncrementScore();
