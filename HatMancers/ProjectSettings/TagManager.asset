@@ -10,6 +10,7 @@ TagManager:
   - IceHat
   - BubbleHat
   - BearHat
+  - PoisonHat
   layers:
   - Default
   - TransparentFX

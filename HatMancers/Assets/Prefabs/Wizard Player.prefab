@@ -417,6 +417,13 @@ MonoBehaviour:
   bearDelayTime: 1
   bearTime: 0
   bearForce: 1
+  bearSpeed: 500
+  poisonProj: {fileID: 3619734693604437396, guid: d86d7d44417be9347ab9c7c47f2abd59,
+    type: 3}
+  poisonForce: 400
+  poisonForceVert: 600
+  poisonDelayTime: 2
+  poisonOffset: {x: 0, y: 2, z: 0}
   UIColor_Fire: {r: 1, g: 0.25838426, b: 0.24528301, a: 1}
   UIColor_Ice: {r: 0, g: 0.6313726, b: 1, a: 1}
   UIColor_Lightning: {r: 0.9528302, g: 0.91999876, b: 0, a: 1}
