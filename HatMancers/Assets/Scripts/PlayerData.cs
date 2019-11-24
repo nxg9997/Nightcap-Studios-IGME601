@@ -240,6 +240,7 @@ public class PlayerData : MonoBehaviour
 
             //transform.position = GameObject.Find("Manager").GetComponent<RespawnManager>().FindSpawnPoint(opponent);
             transform.position = GameObject.Find("Manager").GetComponent<RespawnManager>().FindSpawnPoint(lastDamageDealer);
+            pCtrl.grounded = false;
         }
     }
 

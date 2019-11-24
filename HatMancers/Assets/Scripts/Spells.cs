@@ -37,6 +37,7 @@ public class Spells : MonoBehaviour
     // Bear Data
     public GameObject bearObj;
     private GameObject currBear;
+    public float bearDuration = 0.5f;
     public float bearDelayTime = 1.0f;
     public float bearTime = 0;
     private bool bearDelay = false;
@@ -207,6 +208,9 @@ public class Spells : MonoBehaviour
                 if (bearTime > bearDelayTime)
                 {
                     bearDelay = false;
+                }
+                else if (bearTime > bearDuration)
+                {
                     Destroy(currBear);
                     GetComponent<PlayerController>().speed = originalSpeed;
                 }

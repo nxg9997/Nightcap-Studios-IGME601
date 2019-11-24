@@ -415,6 +415,8 @@ public class Manager : MonoBehaviour
     IEnumerator WaitForEnd()
     {
         yield return new WaitForSecondsRealtime(10);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene(0);
     }
 
