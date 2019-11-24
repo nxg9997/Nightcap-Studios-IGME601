@@ -147,7 +147,7 @@ public class PlayerPrefButton : MonoBehaviour
     private void onClick()
     {
         // Setting the Player Preference
-        setPref();
+        //setPref();
         // Debug.Log(getPref());
         
         // IF the on-click has been set, call it

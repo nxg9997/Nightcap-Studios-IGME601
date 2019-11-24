@@ -21,6 +21,8 @@ public class Manager : MonoBehaviour
     public float matchTimeMin = 5;
     private Text matchTimerText;
 
+    private int assignedPlayers;
+
     [SerializeField]
     private float matchTimeMs;
 
@@ -38,7 +40,12 @@ public class Manager : MonoBehaviour
         instance = this;
 
         // Getting the starting player count
+        assignedPlayers = 0;
         int startingPlayers = PlayerPrefs.GetInt("PlayerCount", 4);
+        string player1Controller = PlayerPrefs.GetString("Player1Controller", null);
+        string player2Controller = PlayerPrefs.GetString("Player2Controller", null);
+        string player3Controller = PlayerPrefs.GetString("Player3Controller", null);
+        string player4Controller = PlayerPrefs.GetString("Player4Controller", null);
 
         // SWITCH for the amount of players
         switch (startingPlayers)
@@ -63,6 +70,16 @@ public class Manager : MonoBehaviour
                     playerCamera1.rect = new Rect(0f, 0.5f, 1f, 0.5f);
                     playerCamera2.rect = new Rect(0f, 0f, 1f, 0.5f);
 
+                    // Set controllers
+                    if (player1Controller != null)
+                        SetPlayerController(player1Controller);
+                    if (player2Controller != null)
+                        SetPlayerController(player2Controller);
+                    if (player3Controller != null)
+                        SetPlayerController(player3Controller);
+                    if (player4Controller != null)
+                        SetPlayerController(player4Controller);
+
                     // Add active players
                     players.Add(player1);
                     players.Add(player2);
@@ -83,6 +100,16 @@ public class Manager : MonoBehaviour
                     Camera playerCamera3 = player3.GetComponentInChildren<Camera>();
                     playerCamera3.rect = new Rect(0f, 0f, 1f, 0.5f);
 
+                    // Set controllers
+                    if (player1Controller != null)
+                        SetPlayerController(player1Controller);
+                    if (player2Controller != null)
+                        SetPlayerController(player2Controller);
+                    if (player3Controller != null)
+                        SetPlayerController(player3Controller);
+                    if (player4Controller != null)
+                        SetPlayerController(player4Controller);
+
                     // Add active players
                     players.Add(player1);
                     players.Add(player2);
@@ -95,6 +122,16 @@ public class Manager : MonoBehaviour
                     Debug.Log("Manager.Start(): Case 4 flipped");
                 else
                 {
+                    // Set controllers
+                    if (player1Controller != null)
+                        SetPlayerController(player1Controller);
+                    if (player2Controller != null)
+                        SetPlayerController(player2Controller);
+                    if (player3Controller != null)
+                        SetPlayerController(player3Controller);
+                    if (player4Controller != null)
+                        SetPlayerController(player4Controller);
+
                     // Add active players
                     players.Add(player1);
                     players.Add(player2);
@@ -217,6 +254,156 @@ public class Manager : MonoBehaviour
         resumingGame = true;
         matchTimerText.rectTransform.position = new Vector3(0, 0, 0);
         SceneManager.LoadScene(0);
+    }
+
+    private void SetPlayerController(string controller)
+    {
+        switch (assignedPlayers)
+        {
+            case 0:
+                switch (controller)
+                {
+                    case "Keyboard":
+                        player1.GetComponent<PlayerController>().playerNum = 1;
+                        break;
+                    case "Xbox1":
+                        player1.GetComponent<PlayerController>().playerNum = 2;
+                        break;
+                    case "Xbox2":
+                        player1.GetComponent<PlayerController>().playerNum = 3;
+                        break;
+                    case "Xbox3":
+                        player1.GetComponent<PlayerController>().playerNum = 4;
+                        break;
+                    case "Xbox4":
+                        player1.GetComponent<PlayerController>().playerNum = 5;
+                        break;
+                    case "PS1":
+                        player1.GetComponent<PlayerController>().playerNum = 6;
+                        break;
+                    case "PS2":
+                        player1.GetComponent<PlayerController>().playerNum = 7;
+                        break;
+                    case "PS3":
+                        player1.GetComponent<PlayerController>().playerNum = 8;
+                        break;
+                    case "PS4":
+                        player1.GetComponent<PlayerController>().playerNum = 9;
+                        break;
+                    default:
+                        break;
+                }
+                assignedPlayers++;
+                break;
+            case 1:
+                switch (controller)
+                {
+                    case "Keyboard":
+                        player2.GetComponent<PlayerController>().playerNum = 1;
+                        break;
+                    case "Xbox1":
+                        player2.GetComponent<PlayerController>().playerNum = 2;
+                        break;
+                    case "Xbox2":
+                        player2.GetComponent<PlayerController>().playerNum = 3;
+                        break;
+                    case "Xbox3":
+                        player2.GetComponent<PlayerController>().playerNum = 4;
+                        break;
+                    case "Xbox4":
+                        player2.GetComponent<PlayerController>().playerNum = 5;
+                        break;
+                    case "PS1":
+                        player2.GetComponent<PlayerController>().playerNum = 6;
+                        break;
+                    case "PS2":
+                        player2.GetComponent<PlayerController>().playerNum = 7;
+                        break;
+                    case "PS3":
+                        player2.GetComponent<PlayerController>().playerNum = 8;
+                        break;
+                    case "PS4":
+                        player2.GetComponent<PlayerController>().playerNum = 9;
+                        break;
+                    default:
+                        break;
+                }
+                assignedPlayers++;
+                break;
+            case 2:
+                switch (controller)
+                {
+                    case "Keyboard":
+                        player3.GetComponent<PlayerController>().playerNum = 1;
+                        break;
+                    case "Xbox1":
+                        player3.GetComponent<PlayerController>().playerNum = 2;
+                        break;
+                    case "Xbox2":
+                        player3.GetComponent<PlayerController>().playerNum = 3;
+                        break;
+                    case "Xbox3":
+                        player3.GetComponent<PlayerController>().playerNum = 4;
+                        break;
+                    case "Xbox4":
+                        player3.GetComponent<PlayerController>().playerNum = 5;
+                        break;
+                    case "PS1":
+                        player3.GetComponent<PlayerController>().playerNum = 6;
+                        break;
+                    case "PS2":
+                        player3.GetComponent<PlayerController>().playerNum = 7;
+                        break;
+                    case "PS3":
+                        player3.GetComponent<PlayerController>().playerNum = 8;
+                        break;
+                    case "PS4":
+                        player3.GetComponent<PlayerController>().playerNum = 9;
+                        break;
+                    default:
+                        break;
+                }
+                assignedPlayers++;
+                break;
+            case 3:
+                switch (controller)
+                {
+                    case "Keyboard":
+                        player4.GetComponent<PlayerController>().playerNum = 1;
+                        break;
+                    case "Xbox1":
+                        player4.GetComponent<PlayerController>().playerNum = 2;
+                        break;
+                    case "Xbox2":
+                        player4.GetComponent<PlayerController>().playerNum = 3;
+                        break;
+                    case "Xbox3":
+                        player4.GetComponent<PlayerController>().playerNum = 4;
+                        break;
+                    case "Xbox4":
+                        player4.GetComponent<PlayerController>().playerNum = 5;
+                        break;
+                    case "PS1":
+                        player4.GetComponent<PlayerController>().playerNum = 6;
+                        break;
+                    case "PS2":
+                        player4.GetComponent<PlayerController>().playerNum = 7;
+                        break;
+                    case "PS3":
+                        player4.GetComponent<PlayerController>().playerNum = 8;
+                        break;
+                    case "PS4":
+                        player4.GetComponent<PlayerController>().playerNum = 9;
+                        break;
+                    default:
+                        break;
+                }
+                assignedPlayers++;
+                break;
+            default:
+                break;
+        }
+        
     }
 
     IEnumerator WaitForEnd()
