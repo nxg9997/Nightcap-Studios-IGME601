@@ -20,6 +20,7 @@ public class PlayerData : MonoBehaviour
     private float spawnTimer = 0;
     public float spawnTime = 3;
     public bool dead = false;
+    private Rigidbody body;
 
     public float killPlaneDepth = -50;
 
@@ -46,6 +47,7 @@ public class PlayerData : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        body = GetComponent<Rigidbody>();
         // Dummies have certain components removed since they are not needed
         if (testDummy)
         {
@@ -212,9 +214,14 @@ public class PlayerData : MonoBehaviour
         // IF the colliding object has a SpellData instance...
         if (spell != null)
         {
+            //body.velocity = new Vector3(0, 40, 0);
             lastDamageDealer = spell.origin;
             health -= spell.damage;
-            if (health < 1 && !dead)
+            if (health > 0)
+            {
+                StartCoroutine("DoBlink");
+            }
+                if (health < 1 && !dead)
             {
                 Die();
                 lastDamageDealer.GetComponent<PlayerData>().IncrementScore();
@@ -243,12 +250,11 @@ public class PlayerData : MonoBehaviour
         }
         else if(col.gameObject.tag == "Damage") // Damages the player if they are hit by a damaging source (denoted by the "Damage" tag)
         {
-            if(col.gameObject.GetComponent<SpellData>().origin.name != gameObject.name)
+            if (col.gameObject.GetComponent<SpellData>().origin.name != gameObject.name)
             {
+                //health -= col.gameObject.GetComponent<SpellData>().damage;
                 ProcessDamage(col.gameObject);
             }
-                //health -= col.gameObject.GetComponent<SpellData>().damage;
-            //Debug.Log(health);
         }
     }
 
@@ -258,10 +264,48 @@ public class PlayerData : MonoBehaviour
         {
             if (col.gameObject.GetComponent<SpellData>().origin.name != gameObject.name)
             {
+                //health -= col.gameObject.GetComponent<SpellData>().damage;
                 ProcessDamage(col.gameObject);
             }
-                //health -= col.gameObject.GetComponent<SpellData>().damage;
-            //Debug.Log(health);
+        }
+    }
+
+    IEnumerator DoBlink()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            StartCoroutine("BlinkAnimation");
+            yield return new WaitForSeconds(0.25f);
+        }
+    }
+
+    IEnumerator BlinkAnimation()
+    {
+        DisableWizardModel();
+        if (health > 0)
+        {
+            yield return new WaitForSeconds(0.125f);
+            EnableWizardModel();
+        }
+    }
+
+    void DisableWizardModel()
+    {
+        SkinnedMeshRenderer[] renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer renderer in renderers)
+        {
+            if(renderer.enabled)
+            renderer.enabled = false;
+        }
+    }
+
+    void EnableWizardModel()
+    {
+        SkinnedMeshRenderer[] renderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer renderer in renderers)
+        {
+            if(!renderer.enabled)
+            renderer.enabled = true;
         }
     }
 
