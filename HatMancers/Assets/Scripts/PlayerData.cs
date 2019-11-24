@@ -167,7 +167,36 @@ public class PlayerData : MonoBehaviour
     /// </summary>
     void StickyHat()
     {
-        if (currHat == null) return;
+        if(currHat == null && currMagic != "none")
+        {
+            HatSpawner hs = Manager.instance.gameObject.GetComponent<HatSpawner>();
+            if (currMagic == "fire")
+            {
+                currHat = Instantiate(hs.hats[0]);
+            }
+            else if (currMagic == "lightning")
+            {
+                currHat = Instantiate(hs.hats[2]);
+            }
+            else if (currMagic == "ice")
+            {
+                currHat = Instantiate(hs.hats[1]);
+            }
+            else if (currMagic == "poison")
+            {
+                currHat = Instantiate(hs.hats[5]);
+            }
+            else if (currMagic == "bubbles")
+            {
+                currHat = Instantiate(hs.hats[3]);
+            }
+            else if (currMagic == "bear")
+            {
+                currHat = Instantiate(hs.hats[4]);
+            }
+            currHat.GetComponent<BoxCollider>().enabled = false;
+        }
+        else if (currHat == null) return;
         currHat.transform.position = hatPosition.transform.position;
         currHat.transform.rotation = hatPosition.transform.rotation;
     }
