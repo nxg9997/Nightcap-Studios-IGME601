@@ -377,11 +377,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNum: 1
   head: {fileID: 2066530691296663018}
-  speed: 300
+  speed: 100
   rotationSpeed: 150
-  jumpSpeed: 250
+  jumpSpeed: 1000
   jumpHoldTime: 0.3
   gravityForce: 200
+  manager: {fileID: 0}
   canMove: 1
 --- !u!114 &2066530691247582554
 MonoBehaviour:
@@ -407,9 +408,26 @@ MonoBehaviour:
   lightningPersistTime: 2
   lightningPersistTimer: 0
   iceObj: {fileID: 2963749747300618296, guid: 9536b2af86c2c21459e5f30aff964fa4, type: 3}
+  bubbleObj: {fileID: 6814668400825871885, guid: 2938453c756a78844bfb8830ace76d31,
+    type: 3}
+  bubbleDelayTime: 0.25
+  bubbleTime: 0
+  bubbleForce: 1
+  bearObj: {fileID: 4666866377355037403, guid: 2bb797fba969d354d8161055e3ba7a98, type: 3}
+  bearDelayTime: 1
+  bearTime: 0
+  bearForce: 1
+  bearSpeed: 500
+  poisonProj: {fileID: 3619734693604437396, guid: d86d7d44417be9347ab9c7c47f2abd59,
+    type: 3}
+  poisonForce: 400
+  poisonForceVert: 600
+  poisonDelayTime: 2
+  poisonOffset: {x: 0, y: 2, z: 0}
   UIColor_Fire: {r: 1, g: 0.25838426, b: 0.24528301, a: 1}
   UIColor_Ice: {r: 0, g: 0.6313726, b: 1, a: 1}
   UIColor_Lightning: {r: 0.9528302, g: 0.91999876, b: 0, a: 1}
+  cam: {fileID: 0}
 --- !u!114 &2066530691247582553
 MonoBehaviour:
   m_ObjectHideFlags: 0

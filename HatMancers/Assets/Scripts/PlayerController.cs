@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public float gravityForce; // Force of gravity weighing down in air
 
     //Pause Menu Variables
+    [SerializeField]
     private Manager manager;
 
     // Rigidbody for physics
@@ -50,7 +51,8 @@ public class PlayerController : MonoBehaviour
         body = GetComponent<Rigidbody>();
         cameraMouse = head.gameObject.GetComponentInChildren<CameraMouse>();
         animScript = this.gameObject.GetComponentInChildren<WizardAnimScript>();
-        manager = Manager.instance;
+        //manager = Manager.instance;
+        manager = GameObject.Find("Manager").GetComponent<Manager>();
     }
 
     // Update is called once per frame
@@ -116,6 +118,9 @@ public class PlayerController : MonoBehaviour
             body.AddForce(transform.forward * vertical * speed, ForceMode.Force);
         if (body.velocity.z < speed)
             body.AddForce(transform.right * horizontal * speed, ForceMode.Force);
+
+        // Project velocity onto the ground
+        body.velocity = Vector3.ProjectOnPlane(body.velocity, Terrain.activeTerrain.terrainData.GetInterpolatedNormal(transform.position.x, transform.position.z));
 
         // Deadzone for velocity
         if (body.velocity.magnitude < 0.1)

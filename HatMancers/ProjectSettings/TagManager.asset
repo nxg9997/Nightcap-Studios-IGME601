@@ -8,6 +8,9 @@ TagManager:
   - Damage
   - LightningHat
   - IceHat
+  - BubbleHat
+  - BearHat
+  - PoisonHat
   layers:
   - Default
   - TransparentFX
