@@ -9,6 +9,7 @@ public class StartBtn : MonoBehaviour
     // Modifiable Attributes
     public Canvas menuCanvas;
     public QuitBtn quit;
+    public ControlsBtn controls;
     public GameObject prefButtonPrefab;
     public Text controllerText;
     public int sceneIndex;
@@ -134,6 +135,7 @@ public class StartBtn : MonoBehaviour
 
         // Hiding the Start and Quit buttons
         startRect.position = new Vector3(-9999, -9999, 0);
+        controls.gameObject.SetActive(false);
         quit.gameObject.SetActive(false);
         controllerText.enabled = true;
 
@@ -164,6 +166,7 @@ public class StartBtn : MonoBehaviour
         // Setting the Start and Quit buttons to be active
         //startRect.rect.Set(startRect.rect.x, startRect.rect.y, startOriginalWidth, startOriginalHeight);
         startRect.position = originalPosition;
+        controls.gameObject.SetActive(true);
         quit.gameObject.SetActive(true);
         controllerText.enabled = false;
 
