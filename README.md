@@ -37,5 +37,10 @@ Google Drive is a pretty cool service where we can chuck large files at it and i
 
 [Google Drive](https://drive.google.com/drive/folders/1_EkX93Jr42Y3Sng88yiRZOCuJ8a5382c)
 
+### Development Processes
+Game development is impossibly hard, so we made a series of instructions for ourselves detailing how to do some basic things when working on our game. Those instructions can be found here:
+
+[Product Document](https://docs.google.com/document/d/1NvYEUAAkOdUojsbtYIxrwE6MzRtUaYdsf2VEoeeR5Ds/)
+
 ## Branching Strategy
-Feature based branching strategy will be used for this project
+A feature-based branching strategy will be used for this project. New features will be developed in their own branch before being merged into the "master" branch. Bug fixes are treated the same way.
