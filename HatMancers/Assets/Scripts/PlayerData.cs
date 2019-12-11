@@ -121,7 +121,7 @@ public class PlayerData : MonoBehaviour
     {
         if(transform.position.y <= killPlaneDepth)
         {
-            health = 0;
+            Die();
         }
     }
 
