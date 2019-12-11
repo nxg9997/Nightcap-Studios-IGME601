@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     private float jumpTimer;
 
     // Flags
-    private bool grounded;
+    public bool grounded = false;
     public bool canMove = true;
 
     // Start is called before the first frame update
@@ -83,6 +83,16 @@ public class PlayerController : MonoBehaviour
         }
 
         if (!canMove) return;
+
+        // Check if not on ground
+        if (Physics.Raycast(transform.position, -transform.up, 0.5f))
+        {
+            grounded = true;
+        }
+        else
+        {
+            grounded = false;
+        }
 
         // Get axes values
         vertical = Input.GetAxis("LSV" + playerNum);
@@ -170,20 +180,20 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter (Collision collision)
     {
         // Check if hitting the ground (Layer 8)
-        if (collision.gameObject.layer == 8)
+        /*if (collision.gameObject.layer == 8)
         {
             grounded = true;
-        }
+        }*/
     }
 
     // Check for when a collider no longer overlaps this game object
     void OnCollisionExit (Collision collision)
     {
         // Check if leaving the ground (Layer 8)
-        if (collision.gameObject.layer == 8)
+        /*if (collision.gameObject.layer == 8)
         {
             grounded = false;
-        }
+        }*/
     }
 
     /// <summary>

@@ -17,7 +17,10 @@ public class Manager : MonoBehaviour
     public static Manager instance;
     public static bool isGamePaused = false;
     public static bool resumingGame = false;
+
+    //UI Panels
     public GameObject pauseMenuUI;
+    public GameObject displayControlsUI;
 
     public float matchTimeMin = 5;
     private Text matchTimerText;
@@ -247,9 +250,10 @@ public class Manager : MonoBehaviour
     }
 
     // Maybe display controls on clicking Settings button
-    public void LoadSettings()
+    public void DisplayControls()
     {
-        Debug.Log("Loading Settings......");
+        pauseMenuUI.SetActive(false);
+        displayControlsUI.SetActive(true);
     }
 
     // Quit the current game and load the landing scene of the Build
@@ -259,7 +263,7 @@ public class Manager : MonoBehaviour
         isGamePaused = false;
         resumingGame = true;
         matchTimerText.rectTransform.position = new Vector3(0, 0, 0);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("StartMenu2.0");
     }
 
     private void SetPlayerController(string controller)
@@ -415,6 +419,8 @@ public class Manager : MonoBehaviour
     IEnumerator WaitForEnd()
     {
         yield return new WaitForSecondsRealtime(10);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene(0);
     }
 

@@ -5,16 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/StartMenu.unity
     guid: 03ab2cb0135b30841a133cc57ef60719
-  - enabled: 1
-    path: Assets/Scenes/S4Hats.unity
-    guid: 461665d01f9f38c4ab5fdd97f62935f6
-  - enabled: 1
-    path: Assets/Scenes/WizardModelsWithMult.unity
-    guid: fe45e5a4f7224f94abfbb0ff45797b79
   - enabled: 0
-    path: Assets/Scenes/NateDavidCombined.unity
-    guid: 93f39b5fe4e0e304583ea45dd31e02b5
+    path: Assets/Scenes/S4_Final.unity
+    guid: 6561c567d3d5c41459a58eb5de47c4a5
+  - enabled: 1
+    path: Assets/Scenes/StartMenu2.0.unity
+    guid: ca2203503ac480b43bab2eb1974acc7d
+  - enabled: 1
+    path: Assets/Scenes/S4_Final2.0.unity
+    guid: 9176e6d6cfa4735478b9a0370c71c693
   m_configObjects: {}
