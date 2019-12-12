@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2966c992eff8d9a4381a105fb772b8e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 5
   origin: {fileID: 0}
 --- !u!114 &-3451786990629444111
 MonoBehaviour:
@@ -139,6 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poisonArea: {fileID: 2685980045044659894, guid: 56a7803257b7e5141bb92f744f6aa517,
     type: 3}
+  gravity: 9.8
 --- !u!1 &8801234437984539225
 GameObject:
   m_ObjectHideFlags: 0

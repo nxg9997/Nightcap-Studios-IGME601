@@ -5,17 +5,19 @@ using UnityEngine;
 public class PoisonAreaSpawn : MonoBehaviour
 {
     public GameObject poisonArea;
+    public float gravity;
+    private Rigidbody rigidbody;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        rigidbody = gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        rigidbody.AddForce(-(transform.up * gravity));
     }
 
     void OnCollisionEnter(Collision col)

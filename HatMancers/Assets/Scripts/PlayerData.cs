@@ -121,7 +121,7 @@ public class PlayerData : MonoBehaviour
     {
         if(transform.position.y <= killPlaneDepth)
         {
-            health = 0;
+            Die();
         }
     }
 
@@ -240,6 +240,7 @@ public class PlayerData : MonoBehaviour
 
             //transform.position = GameObject.Find("Manager").GetComponent<RespawnManager>().FindSpawnPoint(opponent);
             transform.position = GameObject.Find("Manager").GetComponent<RespawnManager>().FindSpawnPoint(lastDamageDealer);
+            pCtrl.grounded = false;
         }
     }
 
