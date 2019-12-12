@@ -20,6 +20,9 @@ public class CameraMouse : MonoBehaviour
     public Vector3 localRotation;
     public bool cameraDisabled = false;
 
+    // Private StartPivot property (for tracking initial body rotation)
+    private Vector3 startRotation;
+
     // Private PlayerNum Property (used for input)
     private int playerNum;
 
@@ -35,6 +38,7 @@ public class CameraMouse : MonoBehaviour
     {
         cam = transform;
         pivot = transform.parent;
+        startRotation = pController.gameObject.transform.eulerAngles;
 
         LockCursor(true);
 
@@ -86,7 +90,7 @@ public class CameraMouse : MonoBehaviour
         }
 
         // Actual Camera Rig Transformations
-        pivot.rotation = Quaternion.Euler(localRotation.y, localRotation.x, 0);
+        pivot.rotation = Quaternion.Euler(startRotation.x + localRotation.y, startRotation.y + localRotation.x, 0);
         //Quaternion QT = Quaternion.Euler(localRotation.y, localRotation.x, 0);
         //pivot.rotation = Quaternion.Lerp(pivot.rotation, QT, Time.deltaTime * orbitDampening);
 

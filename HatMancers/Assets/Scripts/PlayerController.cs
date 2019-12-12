@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     // Rigidbody for physics
     private Rigidbody body;
 
+    // Stored StartRotation values
+    private Vector3 startRotation;
+
     // Store CameraMouse to access orbit dampening
     private CameraMouse cameraMouse;
 
@@ -48,6 +51,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         jumpTimer = 0;
+        startRotation = transform.eulerAngles;
         body = GetComponent<Rigidbody>();
         cameraMouse = head.gameObject.GetComponentInChildren<CameraMouse>();
         animScript = this.gameObject.GetComponentInChildren<WizardAnimScript>();
@@ -145,7 +149,7 @@ public class PlayerController : MonoBehaviour
         //body.velocity += velocity;
 
         // Set horizontal rotation of the body to the horizontal rotation of the head
-        transform.rotation = Quaternion.Euler(transform.rotation.y, cameraMouse.localRotation.x, 0f);
+        transform.rotation = Quaternion.Euler(startRotation.x + transform.rotation.y, startRotation.y + cameraMouse.localRotation.x, 0f);
         //Quaternion QT = Quaternion.Euler(transform.rotation.y, cameraMouse.localRotation.x, 0f);
         //transform.rotation = Quaternion.Lerp(transform.rotation, QT, Time.deltaTime * cameraMouse.orbitDampening);
 
