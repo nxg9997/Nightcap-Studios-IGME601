@@ -1,5 +1,15 @@
-# IGME-601 Fall 2019 
+![HATMANCERS logo](https://i.imgur.com/plaUW5a.png)
+
+**HATMANCERS: World-Wide Wizarding Finals 20XX** is a multiplayer, third-person
+shooter that (hopefully) delivers wondrous, funny, and intense gameplay. It is
+a couch multiplayer title and third-person shooter that delivers a friendly
+environment where magic users are competing in a communal sport. This game is
+targeted at children between the ages of seven and twelve years old.
+
+![Screenshot of gameplay](https://i.imgur.com/KnwfudW.png)
+
 # Nightcap Studios
+![Nightcap Studios logo](https://i.imgur.com/kBbHf9W.png)
 
 ## Team
 
